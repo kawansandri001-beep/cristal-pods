@@ -1325,6 +1325,15 @@ h1 {
     drop-shadow(0 0 24px rgba(255, 46, 179, 0.18));
 }
 
+.flavor-price {
+  margin: 8px 0 0;
+  color: #fff;
+  font-family: "Orbitron", sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 14px rgba(255, 46, 179, 0.28);
+}
+
 .flavor-product-card:hover .flavor-product-image {
   transform: scale(1.04);
 }
