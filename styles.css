@@ -1498,6 +1498,68 @@ h1 {
   scroll-behavior: smooth;
 }
 
+.payment-methods {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.payment-title {
+  margin: 0;
+  color: #fff;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.payment-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.payment-option {
+  min-height: 44px;
+  border: 1px solid rgba(255, 46, 179, 0.18);
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.01);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.payment-option:hover,
+.payment-option.is-active {
+  transform: translateY(-1px);
+  border-color: rgba(255, 75, 209, 0.52);
+  box-shadow:
+    0 0 20px rgba(255, 46, 179, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+.payment-option.is-active {
+  background: linear-gradient(135deg, rgba(255, 46, 179, 0.24), rgba(138, 61, 255, 0.18));
+}
+
+.payment-warning {
+  margin: 0;
+  color: #ffb7e6;
+  font-size: 0.9rem;
+}
+
+.payment-warning.is-hidden {
+  display: none;
+}
+
 .order-empty {
   display: grid;
   justify-items: center;
@@ -2498,6 +2560,10 @@ h1 {
     max-height: 42vh;
   }
 
+  .payment-options {
+    grid-template-columns: 1fr;
+  }
+
   .order-item-actions {
     display: grid;
   }
@@ -2846,6 +2912,10 @@ h1 {
 
   .order-list {
     max-height: 40vh;
+  }
+
+  .payment-options {
+    grid-template-columns: 1fr;
   }
 
   .order-item-actions {

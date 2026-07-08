@@ -12,8 +12,20 @@ const checkoutButton = document.getElementById("checkout-button");
 const mobileOrderTrigger = document.getElementById("mobile-order-trigger");
 const mobileOrderCount = document.getElementById("mobile-order-count");
 const toastStack = document.getElementById("toast-stack");
+const paymentMethods = Array.from(document.querySelectorAll(".payment-option"));
+const paymentWarning = document.getElementById("payment-warning");
 const whatsappBase = "https://wa.me/557588442493?text=";
 const cartItems = [];
+let selectedPayment = "";
+const productPrices = {
+  "NIKBAR 30K": 110,
+  "VNANO": 79.9,
+  "IGNITE V155": 120,
+  "V80 IGNITE": 110,
+  "ELFBAR DUKE 35K": 140,
+  "ELFBAR 10K": 100,
+  "ELFBAR 45K PUFFS": 160
+};
 
 function setActiveFlavor(brand) {
   flavorTabs.forEach((tab) => {
@@ -118,23 +130,48 @@ function dismissCartPanel() {
   }
 }
 
-function formatOrderMessage() {
-  const lines = [
-    "Olá! Gostaria de finalizar meu pedido na Cristal Pods.",
-    "",
-    "**Produto:**",
-    ""
-  ];
-
-  cartItems.forEach((item) => {
-    lines.push(`• Modelo: ${item.model}`);
-    lines.push(`• Marca: ${item.brand}`);
-    lines.push(`• Sabor: ${item.flavor}`);
-    lines.push(`• Quantidade: ${item.quantity}`);
-    lines.push("");
+function updatePaymentSelection() {
+  paymentMethods.forEach((button) => {
+    const isActive = button.dataset.payment === selectedPayment;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
   });
 
-  lines.push("Fico no aguardo da confirmacao de disponibilidade. Obrigado!");
+  if (paymentWarning) {
+    paymentWarning.classList.toggle("is-hidden", Boolean(selectedPayment));
+  }
+}
+
+function getCartTotal() {
+  return cartItems.reduce((total, item) => {
+    const price = productPrices[item.model] || 0;
+    return total + (price * item.quantity);
+  }, 0);
+}
+
+function formatOrderMessage() {
+  const totalValue = getCartTotal().toFixed(2).replace(".", ",");
+  const lines = [
+    "Ola! Quero finalizar meu pedido.",
+    "",
+    "[Pedido]"
+  ];
+
+  cartItems.forEach((item, index) => {
+    lines.push(`- ${item.model}`);
+    lines.push(`- Sabor: ${item.flavor}`);
+    lines.push(`- Qtd: ${item.quantity}`);
+
+    if (index < cartItems.length - 1) {
+      lines.push("");
+    }
+  });
+
+  lines.push("");
+  lines.push(`[Pagamento]: ${selectedPayment}`);
+  lines.push(`[Total]: R$ ${totalValue}`);
+  lines.push("");
+  lines.push("Aguardo a confirmacao da disponibilidade. Obrigado!");
 
   return lines.join("\n");
 }
@@ -144,7 +181,7 @@ function updateCheckoutLink() {
     return;
   }
 
-  if (!cartItems.length) {
+  if (!cartItems.length || !selectedPayment) {
     checkoutButton.href = `${whatsappBase}${encodeURIComponent("Gostaria de ver seu catalogo.")}`;
     checkoutButton.classList.add("is-disabled");
     checkoutButton.setAttribute("aria-disabled", "true");
@@ -209,8 +246,11 @@ function renderCart() {
   }
 
   updateOrderSummary();
+  updatePaymentSelection();
 
   if (!cartItems.length) {
+    selectedPayment = "";
+    updatePaymentSelection();
     dismissCartPanel();
     orderList.innerHTML = `
       <div class="order-empty">
@@ -335,6 +375,14 @@ flavorChips.forEach((chip) => {
   });
 });
 
+paymentMethods.forEach((button) => {
+  button.addEventListener("click", () => {
+    selectedPayment = button.dataset.payment || "";
+    updatePaymentSelection();
+    updateCheckoutLink();
+  });
+});
+
 if (mobileOrderTrigger) {
   mobileOrderTrigger.addEventListener("click", openMobileCart);
 }
@@ -349,8 +397,11 @@ if (orderOverlay) {
 
 if (checkoutButton) {
   checkoutButton.addEventListener("click", (event) => {
-    if (!cartItems.length) {
+    if (!cartItems.length || !selectedPayment) {
       event.preventDefault();
+      if (!selectedPayment) {
+        showToast("Escolha a forma de pagamento");
+      }
       return;
     }
 
@@ -370,4 +421,5 @@ window.addEventListener("resize", () => {
   }
 });
 
+updatePaymentSelection();
 renderCart();
