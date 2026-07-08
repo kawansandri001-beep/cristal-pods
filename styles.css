@@ -1408,6 +1408,8 @@ h1 {
     0 0 28px rgba(255, 46, 179, 0.08);
   backdrop-filter: blur(18px);
   animation: orderFloat 7s ease-in-out infinite;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .order-panel.is-dismissed {
@@ -2546,6 +2548,7 @@ h1 {
     max-height: 72vh;
     transform: translateY(calc(100% + 20px));
     transition: transform 260ms ease;
+    overflow-y: auto;
   }
 
   .order-panel.is-open {
@@ -2892,6 +2895,7 @@ h1 {
     border-radius: 24px 24px 0 0;
     transform: translateY(calc(100% + 20px));
     transition: transform 260ms ease;
+    overflow-y: auto;
   }
 
   .order-panel.is-open {

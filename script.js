@@ -117,6 +117,22 @@ function closeMobileCart() {
   document.body.classList.remove("cart-open");
 }
 
+function focusOrderPanel() {
+  if (!orderPanel) {
+    return;
+  }
+
+  openCartPanel();
+
+  if (isMobileViewport()) {
+    openMobileCart();
+  }
+
+  requestAnimationFrame(() => {
+    orderPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
+
 function dismissCartPanel() {
   if (!orderPanel) {
     return;
@@ -332,14 +348,7 @@ function addToCart(chip) {
   pulseCart();
   bounceCount();
   showToast("Sabor adicionado ao carrinho");
-
-  if (isMobileViewport()) {
-    openMobileCart();
-  } else if (orderPanel) {
-    requestAnimationFrame(() => {
-      orderPanel.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  }
+  focusOrderPanel();
 }
 
 flavorTabs.forEach((tab) => {
@@ -352,6 +361,15 @@ flavorButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const targetBrand = button.dataset.flavorTarget;
     setActiveFlavor(targetBrand);
+
+    const activePanel = document.querySelector(`.flavor-brand-panel[data-panel="${targetBrand}"]`);
+
+    if (activePanel) {
+      requestAnimationFrame(() => {
+        activePanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      return;
+    }
 
     if (flavorsSection) {
       requestAnimationFrame(() => {
@@ -384,7 +402,7 @@ paymentMethods.forEach((button) => {
 });
 
 if (mobileOrderTrigger) {
-  mobileOrderTrigger.addEventListener("click", openMobileCart);
+  mobileOrderTrigger.addEventListener("click", focusOrderPanel);
 }
 
 if (orderClose) {
