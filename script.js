@@ -12,11 +12,20 @@ const checkoutButton = document.getElementById("checkout-button");
 const mobileOrderTrigger = document.getElementById("mobile-order-trigger");
 const mobileOrderCount = document.getElementById("mobile-order-count");
 const toastStack = document.getElementById("toast-stack");
-const paymentMethods = Array.from(document.querySelectorAll(".payment-option"));
+const paymentMethods = Array.from(document.querySelectorAll("[data-payment]"));
 const paymentWarning = document.getElementById("payment-warning");
+const deliveryMethodsBox = document.getElementById("delivery-methods");
+const deliveryOptions = Array.from(document.querySelectorAll("[data-delivery]"));
+const deliveryWarning = document.getElementById("delivery-warning");
+const deliveryForm = document.getElementById("delivery-form");
+const deliveryFormWarning = document.getElementById("delivery-form-warning");
+const deliveryAddress = document.getElementById("delivery-address");
+const deliveryNeighborhood = document.getElementById("delivery-neighborhood");
+const deliveryReference = document.getElementById("delivery-reference");
 const whatsappBase = "https://wa.me/557588442493?text=";
 const cartItems = [];
 let selectedPayment = "";
+let selectedDelivery = "";
 const productPrices = {
   "NIKBAR 30K": 110,
   "VNANO": 79.9,
@@ -156,6 +165,50 @@ function updatePaymentSelection() {
   if (paymentWarning) {
     paymentWarning.classList.toggle("is-hidden", Boolean(selectedPayment));
   }
+
+  if (deliveryMethodsBox) {
+    deliveryMethodsBox.classList.toggle("is-hidden", !selectedPayment);
+  }
+}
+
+function updateDeliverySelection() {
+  deliveryOptions.forEach((button) => {
+    const isActive = button.dataset.delivery === selectedDelivery;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+
+  if (deliveryWarning) {
+    deliveryWarning.classList.toggle("is-hidden", Boolean(selectedDelivery));
+  }
+
+  if (deliveryForm) {
+    const showForm = selectedDelivery === "Entrega";
+    deliveryForm.classList.toggle("is-hidden", !showForm);
+  }
+
+  updateDeliveryFormState();
+}
+
+function isDeliveryFormValid() {
+  return Boolean(
+    normalizeText(deliveryAddress?.value || "") &&
+    normalizeText(deliveryNeighborhood?.value || "") &&
+    normalizeText(deliveryReference?.value || "")
+  );
+}
+
+function updateDeliveryFormState() {
+  if (!deliveryFormWarning) {
+    return;
+  }
+
+  if (selectedDelivery !== "Entrega") {
+    deliveryFormWarning.classList.add("is-hidden");
+    return;
+  }
+
+  deliveryFormWarning.classList.toggle("is-hidden", isDeliveryFormValid());
 }
 
 function getCartTotal() {
@@ -167,29 +220,36 @@ function getCartTotal() {
 
 function formatOrderMessage() {
   const totalValue = getCartTotal().toFixed(2).replace(".", ",");
-  const lines = [
-    "Ola! Quero finalizar meu pedido.",
+  const productLines = cartItems.map((item) => `${item.model} - ${item.flavor} (${item.quantity}x)`);
+
+  if (selectedDelivery === "Retirada") {
+    return [
+      "Novo pedido",
+      "",
+      ...productLines,
+      "",
+      `💳 ${selectedPayment}`,
+      "📍 Retirada",
+      "",
+      `Total: R$ ${totalValue}`,
+      "",
+      "Aguardo a confirmacao. Obrigado!"
+    ].join("\n");
+  }
+
+  return [
+    "Novo pedido",
     "",
-    "[Pedido]"
-  ];
-
-  cartItems.forEach((item, index) => {
-    lines.push(`- ${item.model}`);
-    lines.push(`- Sabor: ${item.flavor}`);
-    lines.push(`- Qtd: ${item.quantity}`);
-
-    if (index < cartItems.length - 1) {
-      lines.push("");
-    }
-  });
-
-  lines.push("");
-  lines.push(`[Pagamento]: ${selectedPayment}`);
-  lines.push(`[Total]: R$ ${totalValue}`);
-  lines.push("");
-  lines.push("Aguardo a confirmacao da disponibilidade. Obrigado!");
-
-  return lines.join("\n");
+    ...cartItems.map((item) => `• ${item.model} - ${item.flavor} (${item.quantity}x)`),
+    "",
+    `💳 ${selectedPayment}`,
+    `📍 ${normalizeText(deliveryAddress?.value || "")} - Bairro ${normalizeText(deliveryNeighborhood?.value || "")}`,
+    `📌 Ref.: ${normalizeText(deliveryReference?.value || "")}`,
+    "",
+    `Total: R$ ${totalValue}`,
+    "",
+    "Aguardo a confirmacao. Obrigado!"
+  ].join("\n");
 }
 
 function updateCheckoutLink() {
@@ -197,7 +257,9 @@ function updateCheckoutLink() {
     return;
   }
 
-  if (!cartItems.length || !selectedPayment) {
+  const deliveryReady = selectedDelivery === "Retirada" || (selectedDelivery === "Entrega" && isDeliveryFormValid());
+
+  if (!cartItems.length || !selectedPayment || !selectedDelivery || !deliveryReady) {
     checkoutButton.href = `${whatsappBase}${encodeURIComponent("Gostaria de ver seu catalogo.")}`;
     checkoutButton.classList.add("is-disabled");
     checkoutButton.setAttribute("aria-disabled", "true");
@@ -266,7 +328,12 @@ function renderCart() {
 
   if (!cartItems.length) {
     selectedPayment = "";
+    selectedDelivery = "";
+    if (deliveryAddress) deliveryAddress.value = "";
+    if (deliveryNeighborhood) deliveryNeighborhood.value = "";
+    if (deliveryReference) deliveryReference.value = "";
     updatePaymentSelection();
+    updateDeliverySelection();
     dismissCartPanel();
     orderList.innerHTML = `
       <div class="order-empty">
@@ -396,7 +463,28 @@ flavorChips.forEach((chip) => {
 paymentMethods.forEach((button) => {
   button.addEventListener("click", () => {
     selectedPayment = button.dataset.payment || "";
+    selectedDelivery = "";
     updatePaymentSelection();
+    updateDeliverySelection();
+    updateCheckoutLink();
+  });
+});
+
+deliveryOptions.forEach((button) => {
+  button.addEventListener("click", () => {
+    selectedDelivery = button.dataset.delivery || "";
+    updateDeliverySelection();
+    updateCheckoutLink();
+  });
+});
+
+[deliveryAddress, deliveryNeighborhood, deliveryReference].forEach((field) => {
+  if (!field) {
+    return;
+  }
+
+  field.addEventListener("input", () => {
+    updateDeliveryFormState();
     updateCheckoutLink();
   });
 });
@@ -415,10 +503,16 @@ if (orderOverlay) {
 
 if (checkoutButton) {
   checkoutButton.addEventListener("click", (event) => {
-    if (!cartItems.length || !selectedPayment) {
+    const deliveryReady = selectedDelivery === "Retirada" || (selectedDelivery === "Entrega" && isDeliveryFormValid());
+
+    if (!cartItems.length || !selectedPayment || !selectedDelivery || !deliveryReady) {
       event.preventDefault();
       if (!selectedPayment) {
         showToast("Escolha a forma de pagamento");
+      } else if (!selectedDelivery) {
+        showToast("Escolha Retirada ou Entrega");
+      } else if (selectedDelivery === "Entrega" && !isDeliveryFormValid()) {
+        showToast("Preencha os dados da entrega");
       }
       return;
     }
@@ -440,4 +534,5 @@ window.addEventListener("resize", () => {
 });
 
 updatePaymentSelection();
+updateDeliverySelection();
 renderCart();
