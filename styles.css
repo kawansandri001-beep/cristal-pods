@@ -481,6 +481,7 @@ h1 {
 }
 
 .cta-primary {
+  min-width: 280px;
   color: #120914;
   background: linear-gradient(135deg, #ffffff, #ffd4f3);
   box-shadow:
@@ -1907,6 +1908,13 @@ h1 {
   text-transform: uppercase;
 }
 
+.delivery-fee-note {
+  margin: -2px 0 0;
+  color: #ffd2ef;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
 .payment-options {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2247,6 +2255,165 @@ h1 {
 
 .toast.is-exit {
   animation: toastOut 220ms ease forwards;
+}
+
+.admin-entry {
+  position: fixed;
+  right: 18px;
+  bottom: 22px;
+  z-index: 36;
+  min-width: 66px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 46, 179, 0.24);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(14, 14, 22, 0.9), rgba(8, 8, 12, 0.94));
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  box-shadow:
+    0 0 24px rgba(255, 46, 179, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+}
+
+.admin-modal[hidden] {
+  display: none;
+}
+
+.admin-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+}
+
+.admin-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 3, 7, 0.72);
+  backdrop-filter: blur(10px);
+}
+
+.admin-panel {
+  position: relative;
+  z-index: 1;
+  width: min(980px, calc(100% - 24px));
+  max-height: calc(100vh - 24px);
+  margin: 12px auto;
+  padding: 24px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 46, 179, 0.24);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at right top, rgba(255, 46, 179, 0.12), transparent 22%),
+    radial-gradient(circle at left bottom, rgba(138, 61, 255, 0.1), transparent 28%),
+    linear-gradient(180deg, rgba(14, 14, 22, 0.9), rgba(8, 8, 12, 0.96));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 0 40px rgba(255, 46, 179, 0.12);
+}
+
+.admin-panel-head,
+.admin-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.admin-login,
+.admin-dashboard,
+.admin-actions,
+.admin-inventory {
+  display: grid;
+  gap: 16px;
+}
+
+.admin-login.is-hidden,
+.admin-dashboard.is-hidden {
+  display: none;
+}
+
+.admin-login,
+.admin-dashboard {
+  margin-top: 22px;
+}
+
+.admin-dashboard.is-hidden {
+  display: none;
+}
+
+.admin-copy {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.admin-inventory {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.admin-item {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid rgba(255, 46, 179, 0.16);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.01);
+}
+
+.admin-item-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.admin-item h4,
+.admin-item p {
+  margin: 0;
+}
+
+.admin-item p {
+  color: var(--muted-soft);
+}
+
+.admin-price-row,
+.admin-flavor-row {
+  display: grid;
+  gap: 8px;
+}
+
+.admin-flavor-row {
+  grid-template-columns: minmax(0, 1fr) 108px;
+  align-items: center;
+}
+
+.admin-flavor-name {
+  color: #fff;
+  font-weight: 500;
+}
+
+.admin-number-input {
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 46, 179, 0.18);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.01);
+  color: #fff;
+  font: inherit;
+}
+
+.flavor-chip.is-sold-out {
+  opacity: 0.52;
+  cursor: not-allowed;
+  border-style: dashed;
 }
 
 .cta-primary.is-disabled {
@@ -3813,5 +3980,30 @@ h1 {
   .crystal-d {
     left: 12%;
     bottom: 132px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-entry {
+    bottom: 80px;
+  }
+
+  .admin-panel {
+    width: calc(100% - 12px);
+    max-height: calc(100vh - 12px);
+    margin: 6px auto;
+    padding: 18px 14px;
+  }
+
+  .admin-panel-head,
+  .admin-actions-row,
+  .admin-item-head,
+  .admin-flavor-row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .admin-inventory {
+    grid-template-columns: 1fr;
   }
 }

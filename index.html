@@ -79,7 +79,6 @@
 
           <div class="hero-actions">
             <a class="cta-primary" href="#catalogo">Ver Catalogo</a>
-            <a class="cta-secondary" href="https://wa.me/557588442493?text=Gostaria%20de%20ver%20seu%20catalogo." target="_blank" rel="noopener noreferrer">Ver Disponibilidade</a>
           </div>
         </div>
 
@@ -249,10 +248,13 @@
                 <div class="flavor-product-info">
                   <span class="flavor-badge">Opcao disponivel</span>
                   <h5>NIKBAR 30K</h5>
-                  <p class="flavor-price">R$110,00</p>
+                  <p class="flavor-price">R$120,00</p>
                   <p>NIKBAR 30K – Pod Descartável – 30.000 Puffs.</p>
                   <div class="flavor-chip-grid flavor-chip-grid-compact">
                     <span class="flavor-chip">Miami Mint</span>
+                    <span class="flavor-chip">Strawberry Kiwi</span>
+                    <span class="flavor-chip">Icy Mint</span>
+                    <span class="flavor-chip">Watermelon Ice</span>
                   </div>
                 </div>
               </section>
@@ -277,9 +279,11 @@
                   <p class="flavor-price">R$60,00</p>
                   <p>Compacto, prático e pronto para usar. Até 1.000 puffs com sabor intenso em um design leve e discreto.</p>
                   <div class="flavor-chip-grid flavor-chip-grid-compact">
+                    <span class="flavor-chip">Green Apple</span>
+                    <span class="flavor-chip">Grape Ice</span>
                     <span class="flavor-chip">Tropical Fruit</span>
+                    <span class="flavor-chip">Cherry Lemonade</span>
                     <span class="flavor-chip">Strawberry Ice</span>
-                    <span class="flavor-chip">Banana Ice</span>
                   </div>
                 </div>
               </section>
@@ -315,6 +319,24 @@ Até 15.500 puffs, design ultrafino, bateria recarregável USB-C e coil mesh par
                   </div>
                 </div>
               </section>
+              <section class="flavor-highlight">
+                <div class="flavor-product-card">
+                  <img class="flavor-product-image" src="./IMAGENS/IGNITE MIX.png" alt="Ignite Mix 40.000 Puffs">
+                </div>
+                <div class="flavor-product-info">
+                  <span class="flavor-badge">Opcao disponivel</span>
+                  <h5>IGNITE MIX 40.000 PUFFS</h5>
+                  <p class="flavor-price">R$150,00</p>
+                  <p>Modelo high-capacity com 40.000 puffs, combinacoes de sabores premium e alta autonomia para quem busca mais duracao.</p>
+                  <div class="flavor-chip-grid flavor-chip-grid-compact">
+                    <span class="flavor-chip">Apple Ice + Strawberry Watermelon</span>
+                    <span class="flavor-chip">Watermelon Ice + Cherry Ice</span>
+                    <span class="flavor-chip">Banana Ice + Strawberry Ice</span>
+                    <span class="flavor-chip">Passion Fruit Sour Kiwi + Pineapple Ice</span>
+                    <span class="flavor-chip">Icy Mint + Peach Grape</span>
+                  </div>
+                </div>
+              </section>
             </div>
           </article>
           <article class="flavor-brand-panel" id="flavor-panel-elfbar" role="tabpanel" aria-labelledby="flavor-tab-elfbar" data-panel="elfbar" hidden>
@@ -333,10 +355,11 @@ Até 15.500 puffs, design ultrafino, bateria recarregável USB-C e coil mesh par
                 <div class="flavor-product-info">
                   <span class="flavor-badge">Opcao disponivel</span>
                   <h5>ELFBAR DUKE 35K</h5>
-                  <p class="flavor-price">R$140,00</p>
+                  <p class="flavor-price">R$135,00</p>
                   <p>Até 35.000 puffs, bateria recarregável USB-C, alta autonomia e sabor intenso do início ao fim.</p>
                   <div class="flavor-chip-grid flavor-chip-grid-compact">
-                    <span class="flavor-chip">Magic Mango</span>
+                    <span class="flavor-chip">Icy Mint</span>
+                    <span class="flavor-chip">Watermelon Ice</span>
                   </div>
                 </div>
               </section>
@@ -408,6 +431,7 @@ Até 15.500 puffs, design ultrafino, bateria recarregável USB-C e coil mesh par
           </div>
           <div class="payment-methods" id="payment-methods">
             <p class="payment-title">Forma de pagamento</p>
+            <p class="delivery-fee-note">Taxa de entrega: +R$10,00 em qualquer item quando escolher Entrega.</p>
             <div class="payment-options" role="radiogroup" aria-label="Forma de pagamento">
               <button class="payment-option" type="button" data-payment="Pix" aria-pressed="false">Pix</button>
               <button class="payment-option" type="button" data-payment="Dinheiro" aria-pressed="false">Dinheiro</button>
@@ -498,6 +522,46 @@ Até 15.500 puffs, design ultrafino, bateria recarregável USB-C e coil mesh par
       </div>
     </footer>
   </main>
+  <button class="admin-entry" id="admin-entry" type="button" aria-haspopup="dialog" aria-controls="admin-modal">
+    ADM
+  </button>
+  <div class="admin-modal" id="admin-modal" hidden>
+    <div class="admin-backdrop" id="admin-backdrop"></div>
+    <section class="admin-panel" role="dialog" aria-modal="true" aria-labelledby="admin-title">
+      <div class="admin-panel-head">
+        <div>
+          <p class="catalog-kicker">Painel ADM</p>
+          <h3 id="admin-title">CONTROLE DE ESTOQUE</h3>
+        </div>
+        <button class="order-close" id="admin-close" type="button" aria-label="Fechar painel ADM">Fechar</button>
+      </div>
+
+      <form class="admin-login" id="admin-login">
+        <label class="delivery-field">
+          <span>Login</span>
+          <input id="admin-username" type="text" autocomplete="username" placeholder="Digite o login">
+        </label>
+        <label class="delivery-field">
+          <span>Senha</span>
+          <input id="admin-password" type="password" autocomplete="current-password" placeholder="Digite a senha">
+        </label>
+        <p class="payment-warning is-hidden" id="admin-login-error">Login ou senha invalidos.</p>
+        <button class="cta-primary" type="submit">Entrar no painel</button>
+      </form>
+
+      <div class="admin-dashboard is-hidden" id="admin-dashboard">
+        <div class="admin-actions">
+          <p class="admin-copy">Edite os precos e a quantidade disponivel por sabor. As alteracoes ficam salvas neste navegador.</p>
+          <div class="admin-actions-row">
+            <button class="cta-primary" id="admin-save" type="button">Salvar alteracoes</button>
+            <button class="cta-secondary" id="admin-logout" type="button">Sair</button>
+          </div>
+        </div>
+        <p class="payment-warning is-hidden" id="admin-save-status">Alteracoes salvas com sucesso.</p>
+        <div class="admin-inventory" id="admin-inventory"></div>
+      </div>
+    </section>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
