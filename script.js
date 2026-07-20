@@ -73,7 +73,8 @@ const defaultInventory = {
     price: 120,
     flavors: {
       "Watermelon Mix": 5,
-      "Icy Mint": 5
+      "Icy Mint": 5,
+      "Menta Icy": 1
     }
   },
   "V80 IGNITE": {
@@ -119,6 +120,26 @@ const defaultInventory = {
       "Mango Magic": 5,
       "Strawberry Kiwi": 5,
       "Abacaxi": 5
+    }
+  },
+  "LIFE POD POWER BANK": {
+    brand: "LIFE POD",
+    price: 130,
+    flavors: {
+      "LOVE 66": 1,
+      "METHOL": 1,
+      "BANANA": 1,
+      "GRAPE HONEY": 1
+    }
+  },
+  "REFIL LIFE POD ECO II 10K PUFFS": {
+    brand: "LIFE POD",
+    price: 90,
+    flavors: {
+      "CHERRY LIME ICE": 1,
+      "BANANA ICE": 1,
+      "GRAPE HONEY": 1,
+      "CHERRY ICE": 1
     }
   }
 };
@@ -258,6 +279,7 @@ function openCartPanel() {
     return;
   }
 
+  orderPanel.hidden = false;
   orderPanel.classList.remove("is-dismissed");
 
   if (mobileOrderTrigger) {
@@ -272,6 +294,7 @@ function dismissCartPanel() {
 
   closeMobileCart();
   orderPanel.classList.add("is-dismissed");
+  orderPanel.hidden = true;
 
   if (mobileOrderTrigger) {
     mobileOrderTrigger.hidden = true;
@@ -359,10 +382,12 @@ function updateDeliveryFormState() {
 }
 
 function getCartTotal() {
-  return cartItems.reduce((total, item) => {
+  const itemsTotal = cartItems.reduce((total, item) => {
     const price = inventoryState[item.model]?.price || 0;
     return total + (price * item.quantity);
   }, 0);
+
+  return itemsTotal + (selectedDelivery === "Entrega" ? 10 : 0);
 }
 
 function formatOrderMessage() {
@@ -428,6 +453,22 @@ function updateOrderSummary() {
 
   if (mobileOrderCount) {
     mobileOrderCount.textContent = `${totalItems} ${totalItems === 1 ? "item" : "itens"}`;
+  }
+
+  if (mobileOrderTrigger) {
+    mobileOrderTrigger.hidden = totalItems === 0;
+  }
+
+  if (!orderPanel) {
+    return;
+  }
+
+  if (totalItems === 0) {
+    orderPanel.classList.add("is-dismissed");
+    orderPanel.hidden = true;
+    closeMobileCart();
+  } else {
+    orderPanel.hidden = false;
   }
 }
 
@@ -603,7 +644,10 @@ function addToCart(chip) {
   pulseCart();
   bounceCount();
   showToast("Sabor adicionado ao carrinho");
-  focusOrderPanel();
+
+  if (isMobileViewport()) {
+    openMobileCart();
+  }
 }
 
 function bindFlavorChips() {
