@@ -51,38 +51,35 @@ const defaultInventory = {
     brand: "NIKBAR",
     price: 120,
     flavors: {
-      "Miami Mint": 1,
-      "Strawberry Kiwi": 0,
-      "Icy Mint": 0,
-      "Watermelon Ice": 0
+      "Morango e Kiwi": 1,
+      "Icy Mint": 1,
+      "Melancia Ice": 1
     }
   },
   "VNANO": {
     brand: "IGNITE",
     price: 60,
     flavors: {
-      "Green Apple": 5,
-      "Grape Ice": 5,
-      "Tropical Fruit": 5,
-      "Cherry Lemonade": 5,
-      "Strawberry Ice": 5,
+      "Maca Verde": 2,
+      "Uva Ice": 1,
+      "Frutas Tropicais": 2,
+      "Limonada de Cereja": 2,
+      "Morango Ice": 2,
     }
   },
   "IGNITE V155": {
     brand: "IGNITE",
     price: 120,
     flavors: {
-      "Watermelon Mix": 5,
-      "Icy Mint": 5,
-      "Menta Icy": 1
+      "Menta Ice": 1
     }
   },
   "V80 IGNITE": {
     brand: "IGNITE",
     price: 110,
     flavors: {
-      "Frozen Strawberry": 5,
-      "Icy Mint": 5
+      "Morango Gelado": 0,
+      "Menta Ice": 0
     }
   },
   "IGNITE MIX 40.000 PUFFS": {
@@ -100,26 +97,24 @@ const defaultInventory = {
     brand: "ELFBAR",
     price: 135,
     flavors: {
-      "Icy Mint": 5,
-      "Watermelon Ice": 5
+      "Ice Menta": 2,
+      "Melancia Ice": 1
     }
   },
   "ELFBAR 10K": {
     brand: "ELFBAR",
     price: 100,
     flavors: {
-      "Grape Ice": 5,
-      "Pineapple Strawberry Banana": 5,
-      "Watermelon": 5
+      "Uva Ice": 0,
+      "Abacaxi Morango Banana": 0,
+      "Melancia": 0
     }
   },
   "ELFBAR 45K PUFFS": {
     brand: "ELFBAR",
     price: 160,
     flavors: {
-      "Mango Magic": 5,
-      "Strawberry Kiwi": 5,
-      "Abacaxi": 5
+      "Abacaxi com Hortela": 1
     }
   },
   "LIFE POD POWER BANK": {
