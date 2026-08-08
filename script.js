@@ -1,7 +1,18 @@
-const flavorTabs = Array.from(document.querySelectorAll(".flavor-tab"));
-const flavorPanels = Array.from(document.querySelectorAll(".flavor-brand-panel"));
-const flavorButtons = Array.from(document.querySelectorAll("[data-flavor-target]"));
-const flavorsSection = document.getElementById("sabores");
+const productsGrid = document.getElementById("products-grid");
+const productModal = document.getElementById("product-modal");
+const productModalBackdrop = document.getElementById("product-modal-backdrop");
+const productModalClose = document.getElementById("product-modal-close");
+const productModalTitle = document.getElementById("product-modal-title");
+const productModalBrand = document.getElementById("product-modal-brand");
+const productModalPrice = document.getElementById("product-modal-price");
+const productModalDescription = document.getElementById("product-modal-description");
+const productGalleryImage = document.getElementById("product-gallery-image");
+const galleryPrev = document.getElementById("gallery-prev");
+const galleryNext = document.getElementById("gallery-next");
+const galleryDots = document.getElementById("gallery-dots");
+const productFlavorList = document.getElementById("product-flavor-list");
+const productAddFirst = document.getElementById("product-add-first");
+
 const orderPanel = document.getElementById("order-panel");
 const orderOverlay = document.getElementById("order-overlay");
 const orderClose = document.getElementById("order-close");
@@ -21,57 +32,231 @@ const deliveryFormWarning = document.getElementById("delivery-form-warning");
 const deliveryAddress = document.getElementById("delivery-address");
 const deliveryNeighborhood = document.getElementById("delivery-neighborhood");
 const deliveryReference = document.getElementById("delivery-reference");
-
-const adminEntry = document.getElementById("admin-entry");
-const adminModal = document.getElementById("admin-modal");
-const adminBackdrop = document.getElementById("admin-backdrop");
-const adminClose = document.getElementById("admin-close");
-const adminLogin = document.getElementById("admin-login");
-const adminUsername = document.getElementById("admin-username");
-const adminPassword = document.getElementById("admin-password");
-const adminLoginError = document.getElementById("admin-login-error");
-const adminDashboard = document.getElementById("admin-dashboard");
-const adminInventory = document.getElementById("admin-inventory");
-const adminSave = document.getElementById("admin-save");
-const adminLogout = document.getElementById("admin-logout");
-const adminSaveStatus = document.getElementById("admin-save-status");
-
-const ADMIN_USERNAME = "cristal.pods";
-const ADMIN_PASSWORD = "cristal2008";
-const ADMIN_SESSION_KEY = "cristal-pods-admin-session";
 const INVENTORY_STORAGE_KEY = "cristal-pods-inventory";
 const whatsappBase = "https://wa.me/557588442493?text=";
-const cartItems = [];
+const DELIVERY_FEE = 10;
 
+const cartItems = [];
 let selectedPayment = "";
 let selectedDelivery = "";
+let activeProductModel = "";
+let activeGalleryIndex = 0;
 
 const defaultInventory = {
+  "ICE KING UVA": {
+    brand: "ICE KING",
+    price: 139.9,
+    flavors: {
+      "Uva Ice": 1
+    }
+  },
+  "ICE KING TIGER BLOOD": {
+    brand: "ICE KING",
+    price: 139.9,
+    flavors: {
+      "Tiger Blood": 1
+    }
+  },
+  "ICE KING NEW TWIST": {
+    brand: "ICE KING",
+    price: 139.9,
+    flavors: {
+      "Neon Twist": 1
+    }
+  },
+  "ELF BAR BC 45K GRAPE TWIST": {
+    brand: "ELF BAR",
+    price: 159.9,
+    flavors: {
+      "GRAPE TWIST": 1
+    }
+  },
+  "ELF BAR BC 45K GREEN APPLE ICE": {
+    brand: "ELF BAR",
+    price: 159.9,
+    flavors: {
+      "GREEN APPLE ICE": 1
+    }
+  },
+  "ELF BAR BC 45K WATERMELON ICE": {
+    brand: "ELF BAR",
+    price: 159.9,
+    flavors: {
+      "WATERMELON ICE": 1
+    }
+  },
+  "BC 10000 TOUCH COCONUT BANANA": {
+    brand: "ELF BAR",
+    price: 99.9,
+    flavors: {
+      "COCONUT BANANA": 1
+    }
+  },
+  "BC 10000 BLUEBERRY WATERMELON": {
+    brand: "ELF BAR",
+    price: 99.9,
+    flavors: {
+      "BLUEBERRY WATERMELON": 1
+    }
+  },
+  "V155 BANANA ICE ULTRA SLIM": {
+    brand: "IGNITE",
+    price: 129.9,
+    flavors: {
+      "BANANA ICE": 1
+    }
+  },
+  "V155 ULTRA SLIM STRABERRY KIWI": {
+    brand: "IGNITE",
+    price: 129.9,
+    flavors: {
+      "STRABERRY KIWI": 1
+    }
+  },
+  "V155 ULTRA SLIM WATERMELON MIX": {
+    brand: "IGNITE",
+    price: 129.9,
+    flavors: {
+      "WATERMELON MIX": 1
+    }
+  },
+  "V155 ULTRA SLIM ICY MINT": {
+    brand: "IGNITE",
+    price: 129.9,
+    flavors: {
+      "ICY MINT": 1
+    }
+  },
+  "V400MIX GRAPE ICE// STRABERRY": {
+    brand: "IGNITE",
+    price: 150,
+    flavors: {
+      "GRAPE ICE // STRABERRY": 2
+    }
+  },
+  "V400 MIX APPLE ICE// STRABERRY WATERMELON": {
+    brand: "IGNITE",
+    price: 150,
+    flavors: {
+      "APPLE ICE // STRABERRY WATERMELON": 1
+    }
+  },
+  "V400 MIX PASSION FRUIT SOUR KIWI // PINEAPPLE ICE WATERMELON": {
+    brand: "IGNITE",
+    price: 150,
+    flavors: {
+      "PASSION FRUIT SOUR KIWI // PINEAPPLE ICE WATERMELON": 1
+    }
+  },
+  "V400 MIX ICY MINT / PEACH GRAPE": {
+    brand: "IGNITE",
+    price: 150,
+    flavors: {
+      "ICY MINT / PEACH GRAPE": 1
+    }
+  },
+  "NIK BAR 12K CRYSTAL 12.000 PUFFS": {
+    brand: "NIK BAR",
+    price: 99.9,
+    flavors: {
+      "SOUR APPLE ICE": 1
+    }
+  },
+  "NIK BAR 12K STABERRY ICE CRYSTAL 12.000 PUFFS": {
+    brand: "NIK BAR",
+    price: 99.9,
+    flavors: {
+      "STABERRY ICE": 1
+    }
+  },
+  "NIK BAR 12K SPEARMINT CRYSTAL 12.000 PUFFS": {
+    brand: "NIK BAR",
+    price: 99.9,
+    flavors: {
+      "SPEARMINT": 1
+    }
+  },
+  "NIK BAR 12K STONE FREEZE CRYSTAL 12.000 PUFFS": {
+    brand: "NIK BAR",
+    price: 99.9,
+    flavors: {
+      "STONE FREEZE": 1
+    }
+  },
+  "WE FUME STRAWBERRY BANANA 30.000 PUFFS": {
+    brand: "WE FUME",
+    price: 80,
+    flavors: {
+      "STRAWBERRY BANANA": 1
+    }
+  },
+  "WE FUME ICE MINT 30.000 PUFFS": {
+    brand: "WE FUME",
+    price: 80,
+    flavors: {
+      "ICE MINT": 1
+    }
+  },
+  "WE FUME STRAWBERRY KIWI 30.000 PUFFS": {
+    brand: "WE FUME",
+    price: 80,
+    flavors: {
+      "STRAWBERRY KIWI": 1
+    }
+  },
+  "ELF BAR DUK 35K ICE MINT": {
+    brand: "ELF BAR",
+    price: 140,
+    flavors: {
+      "ICE MINT": 1
+    }
+  },
+  "VNANO CHERRY LEMONADE": {
+    brand: "IGNITE",
+    price: 60,
+    flavors: {
+      "CHERRY LEMONADE": 2
+    }
+  },
+  "VNANO GRAPE ICE": {
+    brand: "IGNITE",
+    price: 60,
+    flavors: {
+      "GRAPE ICE": 2
+    }
+  },
+  "VNANO TROPICAL FRUIT": {
+    brand: "IGNITE",
+    price: 60,
+    flavors: {
+      "TROPICAL FRUIT": 2
+    }
+  },
   "NIKBAR 30K": {
     brand: "NIKBAR",
     price: 120,
     flavors: {
-      "Morango e Kiwi": 1,
-      "Icy Mint": 1,
-      "Melancia Ice": 1
+      "Morango e Kiwi": 0,
+      "Icy Mint": 0,
+      "Melancia Ice": 0
     }
   },
   "VNANO": {
     brand: "IGNITE",
     price: 60,
     flavors: {
-      "Maca Verde": 2,
-      "Uva Ice": 1,
-      "Frutas Tropicais": 2,
-      "Limonada de Cereja": 2,
-      "Morango Ice": 2,
+      "Maca Verde": 0,
+      "Uva Ice": 0,
+      "Frutas Tropicais": 0,
+      "Limonada de Cereja": 0,
+      "Morango Ice": 0
     }
   },
   "IGNITE V155": {
     brand: "IGNITE",
     price: 120,
     flavors: {
-      "Menta Ice": 1
+      "Menta Ice": 0
     }
   },
   "V80 IGNITE": {
@@ -86,19 +271,19 @@ const defaultInventory = {
     brand: "IGNITE",
     price: 150,
     flavors: {
-      "Apple Ice + Strawberry Watermelon": 2,
-      "Watermelon Ice + Cherry Ice": 2,
-      "Banana Ice + Strawberry Ice": 2,
-      "Passion Fruit Sour Kiwi + Pineapple Ice": 2,
-      "Icy Mint + Peach Grape": 2
+      "Apple Ice + Strawberry Watermelon": 0,
+      "Watermelon Ice + Cherry Ice": 0,
+      "Banana Ice + Strawberry Ice": 0,
+      "Passion Fruit Sour Kiwi + Pineapple Ice": 0,
+      "Icy Mint + Peach Grape": 0
     }
   },
   "ELFBAR DUKE 35K": {
     brand: "ELFBAR",
     price: 135,
     flavors: {
-      "Ice Menta": 2,
-      "Melancia Ice": 1
+      "Ice Menta": 0,
+      "Melancia Ice": 0
     }
   },
   "ELFBAR 10K": {
@@ -114,32 +299,390 @@ const defaultInventory = {
     brand: "ELFBAR",
     price: 160,
     flavors: {
-      "Abacaxi com Hortela": 1
+      "Abacaxi com Hortela": 0
     }
   },
   "LIFE POD POWER BANK": {
     brand: "LIFE POD",
     price: 130,
     flavors: {
-      "LOVE 66": 1,
-      "METHOL": 1,
-      "BANANA": 1,
-      "GRAPE HONEY": 1
+      "LOVE 66": 0,
+      "METHOL": 0,
+      "BANANA": 0,
+      "GRAPE HONEY": 0
     }
   },
   "REFIL LIFE POD ECO II 10K PUFFS": {
     brand: "LIFE POD",
     price: 90,
     flavors: {
-      "CHERRY LIME ICE": 1,
-      "BANANA ICE": 1,
-      "GRAPE HONEY": 1,
-      "CHERRY ICE": 1
+      "CHERRY LIME ICE": 0,
+      "BANANA ICE": 0,
+      "GRAPE HONEY": 0,
+      "CHERRY ICE": 0
     }
   }
 };
 
-let inventoryState = loadInventoryState();
+const productCatalog = {
+  "ICE KING UVA": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/ICE KING UVA/imagem pod.jpg",
+    gallery: [
+      "./IMAGENS/ICE KING UVA/imagem pod.jpg",
+      "./IMAGENS/ICE KING UVA/imagem caixa.jpg",
+      "./IMAGENS/ICE KING UVA/06f71ba0ad752cc625f870f15a07c5b5.jpg"
+    ],
+    description: "Modelo Ice King com visual premium, acabamento moderno e perfil gelado de uva para quem busca sabor marcante e puxada intensa."
+  },
+  "ICE KING TIGER BLOOD": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/ice king tiger blood/images (2).jpg",
+    gallery: [
+      "./IMAGENS/ice king tiger blood/images (2).jpg",
+      "./IMAGENS/ice king tiger blood/images.jpg",
+      "./IMAGENS/ice king tiger blood/80905f3dc51602b70f9e8c423aa55c19.jpg"
+    ],
+    description: "Sabor Tiger Blood com mistura marcante de morango, coco e melancia, em um modelo Ice King de alta duracao e puxada intensa."
+  },
+  "ICE KING NEW TWIST": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/ice king new twist/fundo branco.png",
+    gallery: [
+      "./IMAGENS/ice king new twist/fundo branco.png",
+      "./IMAGENS/ice king new twist/images.jpg",
+      "./IMAGENS/ice king new twist/0b01fe22ac2eab3d17d12ea05d6e47bb.jpg"
+    ],
+    description: "Sabor Neon Twist com perfil frutado, refrescante e marcante, em um modelo Ice King 40K de alta duracao, vapor suave e desempenho premium."
+  },
+  "ELF BAR BC 45K GRAPE TWIST": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/grape twist/IMAGEM 1.png",
+    gallery: [
+      "./IMAGENS/grape twist/IMAGEM 1.png",
+      "./IMAGENS/grape twist/imagem 2.jpg",
+      "./IMAGENS/grape twist/IMAGEM 3.jpg"
+    ],
+    description: "Sabor GRAPE TWIST com chiclete de uva adocicado e perfil nostalgico, em um modelo Elf Bar BC de 45.000 puffs."
+  },
+  "ELF BAR BC 45K GREEN APPLE ICE": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/gren aple/imagem 1.png",
+    gallery: [
+      "./IMAGENS/gren aple/imagem 1.png",
+      "./IMAGENS/gren aple/IMAGME 2.png",
+      "./IMAGENS/gren aple/IMAGEM 3.png"
+    ],
+    description: "Sabor GREEN APPLE ICE com perfil de maca verde gelada, refrescante e marcante, em um modelo Elf Bar BC de 45.000 puffs."
+  },
+  "ELF BAR BC 45K WATERMELON ICE": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/BC 45K WATERMELON ICE/imagem 1.png",
+    gallery: [
+      "./IMAGENS/BC 45K WATERMELON ICE/imagem 1.png",
+      "./IMAGENS/BC 45K WATERMELON ICE/imagem 2.png",
+      "./IMAGENS/BC 45K WATERMELON ICE/imagem 3.png"
+    ],
+    description: "Sabor WATERMELON ICE com perfil refrescante de melancia gelada, em um modelo Elf Bar BC de 45.000 puffs com visual premium."
+  },
+  "BC 10000 TOUCH COCONUT BANANA": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/Banana coconout/imagem 1.png",
+    gallery: [
+      "./IMAGENS/Banana coconout/imagem 1.png",
+      "./IMAGENS/Banana coconout/imagem 2.png",
+      "./IMAGENS/Banana coconout/imagem 3.png"
+    ],
+    description: "Sabor COCONUT BANANA com perfil cremoso e tropical, combinando coco e banana em um modelo pratico de 10.000 puffs."
+  },
+  "BC 10000 BLUEBERRY WATERMELON": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/BC10000 WATERMELON/IMAGEM 1.png",
+    gallery: [
+      "./IMAGENS/BC10000 WATERMELON/IMAGEM 1.png",
+      "./IMAGENS/BC10000 WATERMELON/IMAGEM 2.png",
+      "./IMAGENS/BC10000 WATERMELON/IMAGEM 3.png"
+    ],
+    description: "Sabor BLUEBERRY WATERMELON com mistura frutada de blueberry e melancia, em um modelo pratico de 10.000 puffs com puxada suave."
+  },
+  "V155 BANANA ICE ULTRA SLIM": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/v155 banana ice/imagem 1.png",
+    gallery: [
+      "./IMAGENS/v155 banana ice/imagem 1.png",
+      "./IMAGENS/v155 banana ice/imagem 2.png",
+      "./IMAGENS/v155 banana ice/imagem 3.png"
+    ],
+    description: "Modelo V155 Ultra Slim com 15.500 puffs e sabor BANANA ICE, trazendo puxada gelada, formato fino e visual premium."
+  },
+  "V155 ULTRA SLIM STRABERRY KIWI": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/V155 MORANGO KIWI/IMAGEM 1.png",
+    gallery: [
+      "./IMAGENS/V155 MORANGO KIWI/IMAGEM 1.png",
+      "./IMAGENS/V155 MORANGO KIWI/IMAGEM 2.png",
+      "./IMAGENS/V155 MORANGO KIWI/IMAGEM 3.jpeg"
+    ],
+    description: "Modelo V155 Ultra Slim com 15.500 puffs e sabor STRABERRY KIWI, unindo perfil frutado marcante, formato fino e visual premium."
+  },
+  "V155 ULTRA SLIM WATERMELON MIX": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/V155 WATERMELON MIX/IMAGEM 1.png",
+    gallery: [
+      "./IMAGENS/V155 WATERMELON MIX/IMAGEM 1.png",
+      "./IMAGENS/V155 WATERMELON MIX/IMAGEM 2.png",
+      "./IMAGENS/V155 WATERMELON MIX/IMAGEM 3.jpeg"
+    ],
+    description: "Modelo V155 Ultra Slim com 15.500 puffs e sabor WATERMELON MIX, trazendo perfil refrescante, formato fino e visual premium."
+  },
+  "V155 ULTRA SLIM ICY MINT": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/V155 SLIM MENTA ICE/IMAGEM 1.png",
+    gallery: [
+      "./IMAGENS/V155 SLIM MENTA ICE/IMAGEM 1.png",
+      "./IMAGENS/V155 SLIM MENTA ICE/IMAGEM 2.png",
+      "./IMAGENS/V155 SLIM MENTA ICE/IMAGEM 3.jpeg"
+    ],
+    description: "Modelo V155 Ultra Slim com 15.500 puffs e sabor ICY MINT, trazendo refrescancia intensa, formato fino e visual premium."
+  },
+  "V400MIX GRAPE ICE// STRABERRY": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/IGNITE MIX GRAPE MORANGO/IMAGEM 1.png",
+    gallery: [
+      "./IMAGENS/IGNITE MIX GRAPE MORANGO/IMAGEM 1.png",
+      "./IMAGENS/IGNITE MIX GRAPE MORANGO/IMAGEM 2.png",
+      "./IMAGENS/IGNITE MIX GRAPE MORANGO/IMAGEM 3.png"
+    ],
+    description: "Modelo V400MIX com proposta premium, alta autonomia e sabor GRAPE ICE // STRABERRY para quem busca puxada marcante e visual moderno."
+  },
+  "V400 MIX APPLE ICE// STRABERRY WATERMELON": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/MIX V400 APLE ICE WATERMELON STRABERRY/IMAGEM 1.png",
+    gallery: [
+      "./IMAGENS/MIX V400 APLE ICE WATERMELON STRABERRY/IMAGEM 1.png",
+      "./IMAGENS/MIX V400 APLE ICE WATERMELON STRABERRY/IMAGEM 2.png",
+      "./IMAGENS/MIX V400 APLE ICE WATERMELON STRABERRY/IMAGEM 3.png"
+    ],
+    description: "Modelo V400 MIX com proposta premium, alta autonomia e sabor APPLE ICE // STRABERRY WATERMELON para quem busca puxada marcante e visual moderno."
+  },
+  "V400 MIX PASSION FRUIT SOUR KIWI // PINEAPPLE ICE WATERMELON": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/V400 MIX MARACUJA ABACAXI/IMAGEM 1.png",
+    gallery: [
+      "./IMAGENS/V400 MIX MARACUJA ABACAXI/IMAGEM 1.png",
+      "./IMAGENS/V400 MIX MARACUJA ABACAXI/IMAGME 2.png"
+    ],
+    description: "Modelo V400 MIX com proposta premium, alta autonomia e sabor PASSION FRUIT SOUR KIWI // PINEAPPLE ICE WATERMELON para quem busca puxada marcante e visual moderno."
+  },
+  "V400 MIX ICY MINT / PEACH GRAPE": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/V400 MIX ICY MINT  PEACH GRAPE/IMAGEM 1.png",
+    gallery: [
+      "./IMAGENS/V400 MIX ICY MINT  PEACH GRAPE/IMAGEM 1.png",
+      "./IMAGENS/V400 MIX ICY MINT  PEACH GRAPE/IMAGEM 2.png"
+    ],
+    description: "Modelo V400 MIX com proposta premium, alta autonomia e sabor ICY MINT / PEACH GRAPE para quem busca puxada refrescante e visual moderno."
+  },
+  "NIK BAR 12K CRYSTAL 12.000 PUFFS": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/imagem1.png",
+    gallery: [
+      "./IMAGENS/imagem1.png",
+      "./IMAGENS/nik bar aple ice/imagem 2.png"
+    ],
+    description: "Modelo NIK BAR Crystal com 12.000 puffs e sabor SOUR APPLE ICE, trazendo perfil gelado de maca verde, visual premium e puxada marcante."
+  },
+  "NIK BAR 12K STABERRY ICE CRYSTAL 12.000 PUFFS": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/nikbar 12k morango/imagem 1.png",
+    gallery: [
+      "./IMAGENS/nikbar 12k morango/imagem 1.png",
+      "./IMAGENS/nikbar 12k morango/imagem 2.png",
+      "./IMAGENS/nikbar 12k morango/imagem 3.png"
+    ],
+    description: "Modelo NIK BAR Crystal com 12.000 puffs e sabor STABERRY ICE, trazendo perfil gelado de morango, visual premium e puxada marcante."
+  },
+  "NIK BAR 12K SPEARMINT CRYSTAL 12.000 PUFFS": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/nik bar 12k spearmint/imagem 1.png",
+    gallery: [
+      "./IMAGENS/nik bar 12k spearmint/imagem 1.png",
+      "./IMAGENS/nik bar 12k spearmint/IMAGEM 2.png"
+    ],
+    description: "Modelo NIK BAR Crystal com 12.000 puffs e sabor SPEARMINT, trazendo refrescancia intensa, visual premium e puxada marcante."
+  },
+  "NIK BAR 12K STONE FREEZE CRYSTAL 12.000 PUFFS": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/stone freeze/imagem 1.png",
+    gallery: [
+      "./IMAGENS/stone freeze/imagem 1.png",
+      "./IMAGENS/stone freeze/imagem 2.png",
+      "./IMAGENS/stone freeze/imagem 3.png"
+    ],
+    description: "Modelo NIK BAR Crystal com 12.000 puffs e sabor STONE FREEZE, trazendo perfil gelado marcante, visual premium e puxada intensa."
+  },
+  "WE FUME STRAWBERRY BANANA 30.000 PUFFS": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/we fume morango banana/imagem 1.png",
+    gallery: [
+      "./IMAGENS/we fume morango banana/imagem 1.png"
+    ],
+    description: "Modelo WE FUME com 30.000 puffs e sabor STRAWBERRY BANANA, trazendo perfil doce e frutado, alta duracao e puxada marcante."
+  },
+  "WE FUME ICE MINT 30.000 PUFFS": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/we fume morango banana/we fume de menta.png",
+    gallery: [
+      "./IMAGENS/we fume morango banana/we fume de menta.png"
+    ],
+    description: "Modelo WE FUME com 30.000 puffs e sabor ICE MINT, trazendo refrescancia intensa, alta duracao e puxada marcante."
+  },
+  "WE FUME STRAWBERRY KIWI 30.000 PUFFS": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/we fume morango banana/wefume stawberry kiwi.png",
+    gallery: [
+      "./IMAGENS/we fume morango banana/wefume stawberry kiwi.png"
+    ],
+    description: "Modelo WE FUME com 30.000 puffs e sabor STRAWBERRY KIWI, trazendo perfil frutado marcante, alta duracao e puxada suave."
+  },
+  "ELF BAR DUK 35K ICE MINT": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/duk 35k ice mint/imagem 1.png",
+    gallery: [
+      "./IMAGENS/duk 35k ice mint/imagem 1.png",
+      "./IMAGENS/duk 35k ice mint/imagem 2.png",
+      "./IMAGENS/duk 35k ice mint/imagem 3.png"
+    ],
+    description: "Modelo ELF BAR DUK com 35.000 puffs e sabor ICE MINT, trazendo refrescancia intensa, alta autonomia e visual premium."
+  },
+  "VNANO CHERRY LEMONADE": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/VNANO/CHERRY LEMONADE.png",
+    gallery: [
+      "./IMAGENS/VNANO/CHERRY LEMONADE.png"
+    ],
+    description: "Modelo VNANO com 1.000 puffs e sabor CHERRY LEMONADE, trazendo perfil doce e citrico em um formato compacto e pratico."
+  },
+  "VNANO GRAPE ICE": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/VNANO/GRAPE ICE.png",
+    gallery: [
+      "./IMAGENS/VNANO/GRAPE ICE.png"
+    ],
+    description: "Modelo VNANO com 1.000 puffs e sabor GRAPE ICE, trazendo perfil gelado de uva em um formato compacto e pratico."
+  },
+  "VNANO TROPICAL FRUIT": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/VNANO/TROPICAL FRUIT.png",
+    gallery: [
+      "./IMAGENS/VNANO/TROPICAL FRUIT.png"
+    ],
+    description: "Modelo VNANO com 1.000 puffs e sabor TROPICAL FRUIT, trazendo perfil frutado marcante em um formato compacto e pratico."
+  },
+  "NIKBAR 30K": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/NIKBAR30K.png",
+    gallery: [
+      "./IMAGENS/NIKBAR30K.png",
+      "./IMAGENS/ab5993c9-300c-407d-b4bd-b1c6df4dd49a.png",
+      "./IMAGENS/nikbar sem fundo.png"
+    ],
+    description: "Pod de 30.000 puffs com pegada premium, visual moderno e sabores gelados para quem busca intensidade."
+  },
+  "VNANO": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/VNANO PRO.webp",
+    gallery: [
+      "./IMAGENS/VNANO PRO.webp",
+      "./IMAGENS/VNANO IGNITE.png",
+      "./IMAGENS/IGNITE.png"
+    ],
+    description: "Modelo compacto e facil de usar, com 1.000 puffs e sabores para o dia a dia."
+  },
+  "IGNITE V155": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/V155.png",
+    gallery: [
+      "./IMAGENS/V155.png",
+      "./IMAGENS/V155 IGNITE.png",
+      "./IMAGENS/v155v.png"
+    ],
+    description: "Modelo ultrafino da Ignite com bateria recarregavel, puxada forte e acabamento premium."
+  },
+  "V80 IGNITE": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/v80.png",
+    gallery: [
+      "./IMAGENS/v80.png",
+      "./IMAGENS/V80 IGNITE.png",
+      "./IMAGENS/v80.png"
+    ],
+    description: "V80 com 8.000 puffs e formato premium. Hoje aparece apenas para consulta, sem estoque disponivel."
+  },
+  "IGNITE MIX 40.000 PUFFS": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/IGNITE MIX.png",
+    gallery: [
+      "./IMAGENS/IGNITE MIX.png",
+      "./IMAGENS/IGNITE.png",
+      "./IMAGENS/IGNITE SEM FUNDO.png"
+    ],
+    description: "Modelo high-capacity com combinacoes de sabores e foco em longa duracao."
+  },
+  "ELFBAR DUKE 35K": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/ELFBAR DUKE 35K.png",
+    gallery: [
+      "./IMAGENS/ELFBAR DUKE 35K.png",
+      "./IMAGENS/ELFBAR DUK.png",
+      "./IMAGENS/ELFBAR.png"
+    ],
+    description: "Duke com 35.000 puffs, bateria recarregavel e sabor intenso do inicio ao fim."
+  },
+  "ELFBAR 10K": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/ELFBAR 10K.png",
+    gallery: [
+      "./IMAGENS/ELFBAR 10K.png",
+      "./IMAGENS/10K PUFFS ELFBAR.png",
+      "./IMAGENS/ELFBAR.png"
+    ],
+    description: "Versao compacta da Elfbar com 10.000 puffs. Hoje sem estoque disponivel."
+  },
+  "ELFBAR 45K PUFFS": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/ELF BAR 45K.png",
+    gallery: [
+      "./IMAGENS/ELF BAR 45K.png",
+      "./IMAGENS/ELFBAR 45K PUFFS.png",
+      "./IMAGENS/ELFBAR.png"
+    ],
+    description: "Modelo de 45.000 puffs com alta autonomia e visual moderno."
+  },
+  "LIFE POD POWER BANK": {
+    category: "Pods descartaveis",
+    cover: "./IMAGENS/LIFE POD COM POWER BANK.jpeg",
+    gallery: [
+      "./IMAGENS/LIFE POD COM POWER BANK.jpeg",
+      "./IMAGENS/LIFE POD.png",
+      "./IMAGENS/LIFE POD COM POWER BANK.jpeg"
+    ],
+    description: "Life Pod com Power Bank, pensado para mais praticidade, recarga e autonomia no dia a dia."
+  },
+  "REFIL LIFE POD ECO II 10K PUFFS": {
+    category: "Refis",
+    cover: "./IMAGENS/REFIL LIFE POD.jpeg",
+    gallery: [
+      "./IMAGENS/REFIL LIFE POD.jpeg",
+      "./IMAGENS/LIFE POD.png",
+      "./IMAGENS/REFIL LIFE POD.jpeg"
+    ],
+    description: "Refil Eco II com 10.000 puffs e sabores em quantidades limitadas."
+  }
+};
+
+let inventoryState = deepClone(defaultInventory);
+saveInventoryState();
 
 function normalizeText(value) {
   return String(value || "").replace(/\s+/g, " ").trim();
@@ -199,18 +742,30 @@ function isMobileViewport() {
   return window.matchMedia("(max-width: 768px)").matches;
 }
 
-function setActiveFlavor(brand) {
-  flavorTabs.forEach((tab) => {
-    const isActive = tab.dataset.brand === brand;
-    tab.classList.toggle("is-active", isActive);
-    tab.setAttribute("aria-selected", String(isActive));
-  });
+function getStock(model, flavor) {
+  return inventoryState[model]?.flavors?.[flavor] ?? 0;
+}
 
-  flavorPanels.forEach((panel) => {
-    const isActive = panel.dataset.panel === brand;
-    panel.classList.toggle("is-active", isActive);
-    panel.hidden = !isActive;
-  });
+function getTotalStock(model) {
+  return Object.values(inventoryState[model]?.flavors || {}).reduce((total, qty) => total + qty, 0);
+}
+
+function getCartQuantity(model, flavor) {
+  const item = cartItems.find((entry) => entry.model === model && entry.flavor === flavor);
+  return item ? item.quantity : 0;
+}
+
+function getAvailableProducts() {
+  return Object.keys(productCatalog)
+    .filter((model) => inventoryState[model])
+    .sort((a, b) => {
+      const aStock = getTotalStock(a);
+      const bStock = getTotalStock(b);
+      if ((aStock > 0) !== (bStock > 0)) {
+        return bStock - aStock;
+      }
+      return a.localeCompare(b, "pt-BR");
+    });
 }
 
 function showToast(message) {
@@ -229,24 +784,231 @@ function showToast(message) {
   }, 1800);
 }
 
-function pulseCart() {
-  if (!orderPanel) {
+function renderProducts() {
+  if (!productsGrid) {
     return;
   }
 
-  orderPanel.classList.remove("is-highlighted");
-  void orderPanel.offsetWidth;
-  orderPanel.classList.add("is-highlighted");
+  productsGrid.innerHTML = getAvailableProducts().filter((model) => getTotalStock(model) > 0).map((model) => {
+    const meta = productCatalog[model];
+    const config = inventoryState[model];
+    const totalStock = getTotalStock(model);
+    const availableLabel = totalStock > 0 ? `${totalStock} unidades disponiveis` : "Indisponivel";
+
+    return `
+      <article class="product-card ${totalStock <= 0 ? "is-unavailable" : ""}" data-model="${model}">
+        <div class="product-thumb">
+          <img src="${meta.cover}" alt="${model}">
+        </div>
+        <div class="product-meta">
+          <span class="product-category">${meta.category}</span>
+          <h3>${model}</h3>
+          <p class="product-excerpt">${meta.description}</p>
+          <span class="stock-label ${totalStock <= 0 ? "is-out" : ""}">${availableLabel}</span>
+          <div class="product-card-footer">
+            <strong class="product-price">${totalStock > 0 ? formatPrice(config.price) : "Indisponivel"}</strong>
+            <button class="product-open-button" type="button" data-open-product="${model}">
+              ${totalStock > 0 ? "Ver produto" : "Consultar"}
+            </button>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  Array.from(document.querySelectorAll("[data-open-product]")).forEach((button) => {
+    button.addEventListener("click", () => openProductModal(button.dataset.openProduct || ""));
+  });
 }
 
-function bounceCount() {
-  if (!orderCount) {
+function openProductModal(model) {
+  const meta = productCatalog[model];
+  const config = inventoryState[model];
+
+  if (!meta || !config || !productModal) {
     return;
   }
 
-  orderCount.classList.remove("is-bounce");
-  void orderCount.offsetWidth;
-  orderCount.classList.add("is-bounce");
+  activeProductModel = model;
+  activeGalleryIndex = 0;
+  renderProductModal();
+  productModal.hidden = false;
+  document.body.classList.add("cart-open");
+}
+
+function closeProductModal() {
+  if (!productModal) {
+    return;
+  }
+
+  productModal.hidden = true;
+  activeProductModel = "";
+  document.body.classList.remove("cart-open");
+}
+
+function renderProductModal() {
+  const meta = productCatalog[activeProductModel];
+  const config = inventoryState[activeProductModel];
+
+  if (!meta || !config) {
+    return;
+  }
+
+  const gallery = meta.gallery || [meta.cover];
+  const currentImage = gallery[activeGalleryIndex] || gallery[0];
+  productModalBrand.textContent = `${config.brand} • ${meta.category}`;
+  productModalTitle.textContent = activeProductModel;
+  productModalPrice.textContent = getTotalStock(activeProductModel) > 0 ? formatPrice(config.price) : "Indisponivel";
+  productModalDescription.textContent = meta.description;
+  if (productGalleryImage) {
+    productGalleryImage.src = currentImage;
+    productGalleryImage.alt = activeProductModel;
+  }
+
+  galleryDots.innerHTML = gallery.map((_, index) => `
+    <button
+      class="gallery-dot ${index === activeGalleryIndex ? "is-active" : ""}"
+      type="button"
+      data-gallery-index="${index}"
+      aria-label="Ver slide ${index + 1}"
+    ></button>
+  `).join("");
+
+  Array.from(galleryDots.querySelectorAll("[data-gallery-index]")).forEach((dot) => {
+    dot.addEventListener("click", () => {
+      activeGalleryIndex = Number(dot.dataset.galleryIndex);
+      renderProductModal();
+    });
+  });
+
+  const flavorEntries = Object.entries(config.flavors);
+  if (!flavorEntries.length) {
+    productFlavorList.innerHTML = `
+      <div class="flavor-chip is-sold-out" aria-disabled="true" tabindex="-1">
+        Aguardando sabores e estoque
+      </div>
+    `;
+    productAddFirst.disabled = true;
+    productAddFirst.textContent = "Aguardando sabores";
+    productAddFirst.onclick = null;
+    return;
+  }
+
+  productFlavorList.innerHTML = flavorEntries.map(([flavor, qty]) => {
+    const isSoldOut = qty <= 0;
+    return `
+      <button
+        class="flavor-chip ${isSoldOut ? "is-sold-out" : ""}"
+        type="button"
+        data-modal-flavor="${flavor}"
+        ${isSoldOut ? "aria-disabled=\"true\" tabindex=\"-1\"" : ""}
+      >
+        ${isSoldOut ? `${flavor} • Indisponivel` : `${flavor} • ${qty} un`}
+      </button>
+    `;
+  }).join("");
+
+  Array.from(productFlavorList.querySelectorAll("[data-modal-flavor]")).forEach((button) => {
+    button.addEventListener("click", () => {
+      if (button.classList.contains("is-sold-out")) {
+        return;
+      }
+      addFlavorToCart(activeProductModel, button.dataset.modalFlavor || "");
+    });
+  });
+
+  const firstAvailableFlavor = flavorEntries.find(([, qty]) => qty > 0)?.[0] || "";
+  productAddFirst.disabled = !firstAvailableFlavor;
+  productAddFirst.textContent = firstAvailableFlavor ? "Pedir ja" : "Sem estoque";
+  productAddFirst.onclick = () => {
+    if (!firstAvailableFlavor) {
+      showToast("Produto sem sabores disponiveis no momento");
+      return;
+    }
+    openWhatsAppForProduct(activeProductModel, firstAvailableFlavor);
+  };
+}
+
+function nextGallery(step) {
+  const gallery = productCatalog[activeProductModel]?.gallery || [];
+  if (!gallery.length) {
+    return;
+  }
+
+  activeGalleryIndex = (activeGalleryIndex + step + gallery.length) % gallery.length;
+  renderProductModal();
+}
+
+function addFlavorToCart(model, flavor) {
+  const config = inventoryState[model];
+  const brand = config?.brand || "Cristal Pods";
+
+  if (!config || getStock(model, flavor) <= 0) {
+    showToast("Esse sabor esta indisponivel");
+    return;
+  }
+
+  if (getCartQuantity(model, flavor) >= getStock(model, flavor)) {
+    showToast("Voce atingiu o limite disponivel desse sabor");
+    return;
+  }
+
+  const existingItem = cartItems.find((item) => item.model === model && item.flavor === flavor);
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cartItems.push({ brand, model, flavor, quantity: 1 });
+  }
+
+  openCartPanel();
+  renderCart();
+  showToast("Sabor adicionado ao carrinho");
+
+  if (isMobileViewport()) {
+    openMobileCart();
+  }
+}
+
+function openWhatsAppForProduct(model, flavor) {
+  const normalizedFlavor = (flavor || "").toLowerCase();
+  let flavorEmoji = "✨";
+
+  if (normalizedFlavor.includes("strawberry") || normalizedFlavor.includes("morango")) {
+    flavorEmoji = "🍓";
+  } else if (normalizedFlavor.includes("banana")) {
+    flavorEmoji = "🍌";
+  } else if (normalizedFlavor.includes("grape") || normalizedFlavor.includes("uva")) {
+    flavorEmoji = "🍇";
+  } else if (normalizedFlavor.includes("apple") || normalizedFlavor.includes("maca")) {
+    flavorEmoji = "🍏";
+  } else if (normalizedFlavor.includes("watermelon") || normalizedFlavor.includes("melancia")) {
+    flavorEmoji = "🍉";
+  } else if (normalizedFlavor.includes("mint") || normalizedFlavor.includes("menta") || normalizedFlavor.includes("spearmint")) {
+    flavorEmoji = "🧊";
+  } else if (normalizedFlavor.includes("kiwi")) {
+    flavorEmoji = "🥝";
+  } else if (normalizedFlavor.includes("pineapple") || normalizedFlavor.includes("abacaxi")) {
+    flavorEmoji = "🍍";
+  } else if (normalizedFlavor.includes("peach")) {
+    flavorEmoji = "🍑";
+  } else if (normalizedFlavor.includes("cherry") || normalizedFlavor.includes("cereja")) {
+    flavorEmoji = "🍒";
+  } else if (normalizedFlavor.includes("tropical")) {
+    flavorEmoji = "🥭";
+  } else if (normalizedFlavor.includes("coconut") || normalizedFlavor.includes("coco")) {
+    flavorEmoji = "🥥";
+  } else if (normalizedFlavor.includes("lemonade") || normalizedFlavor.includes("limao")) {
+    flavorEmoji = "🍋";
+  }
+
+  const message = [
+    "*PEDIDO:* 🗒️",
+    "",
+    `*MODELO:* ${model}`,
+    `*SABOR:* ${flavorEmoji} ${flavor}`
+  ].join("\n");
+
+  window.open(`${whatsappBase}${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
 }
 
 function openMobileCart() {
@@ -266,7 +1028,9 @@ function closeMobileCart() {
 
   orderPanel.classList.remove("is-open");
   orderOverlay.hidden = true;
-  document.body.classList.remove("cart-open");
+  if (!productModal || productModal.hidden) {
+    document.body.classList.remove("cart-open");
+  }
 }
 
 function openCartPanel() {
@@ -276,7 +1040,6 @@ function openCartPanel() {
 
   orderPanel.hidden = false;
   orderPanel.classList.remove("is-dismissed");
-
   if (mobileOrderTrigger) {
     mobileOrderTrigger.hidden = false;
   }
@@ -290,7 +1053,6 @@ function dismissCartPanel() {
   closeMobileCart();
   orderPanel.classList.add("is-dismissed");
   orderPanel.hidden = true;
-
   if (mobileOrderTrigger) {
     mobileOrderTrigger.hidden = true;
   }
@@ -302,23 +1064,13 @@ function focusOrderPanel() {
   }
 
   openCartPanel();
-
   if (isMobileViewport()) {
     openMobileCart();
+  } else {
+    requestAnimationFrame(() => {
+      orderPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   }
-
-  requestAnimationFrame(() => {
-    orderPanel.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
-}
-
-function getStock(model, flavor) {
-  return inventoryState[model]?.flavors?.[flavor] ?? 0;
-}
-
-function getCartQuantity(model, flavor) {
-  const item = cartItems.find((entry) => entry.model === model && entry.flavor === flavor);
-  return item ? item.quantity : 0;
 }
 
 function updatePaymentSelection() {
@@ -377,17 +1129,13 @@ function updateDeliveryFormState() {
 }
 
 function getCartTotal() {
-  const itemsTotal = cartItems.reduce((total, item) => {
-    const price = inventoryState[item.model]?.price || 0;
-    return total + (price * item.quantity);
-  }, 0);
-
-  return itemsTotal + (selectedDelivery === "Entrega" ? 10 : 0);
+  const itemsTotal = cartItems.reduce((total, item) => total + ((inventoryState[item.model]?.price || 0) * item.quantity), 0);
+  return itemsTotal + (selectedDelivery === "Entrega" ? DELIVERY_FEE : 0);
 }
 
 function formatOrderMessage() {
   const totalValue = getCartTotal().toFixed(2).replace(".", ",");
-  const productLines = cartItems.map((item) => `${item.model} - ${item.flavor} (${item.quantity}x)`);
+  const productLines = cartItems.map((item) => `• ${item.model} - ${item.flavor} (${item.quantity}x)`);
 
   if (selectedDelivery === "Retirada") {
     return [
@@ -396,7 +1144,7 @@ function formatOrderMessage() {
       ...productLines,
       "",
       `Pagamento: ${selectedPayment}`,
-      "RETIRADA",
+      "Retirada",
       "",
       `Total: R$ ${totalValue}`,
       "",
@@ -407,12 +1155,12 @@ function formatOrderMessage() {
   return [
     "Novo pedido",
     "",
-    ...cartItems.map((item) => `• ${item.model} - ${item.flavor} (${item.quantity}x)`),
+    ...productLines,
     "",
     `Pagamento: ${selectedPayment}`,
     `Endereco: ${normalizeText(deliveryAddress?.value)}`,
     `Bairro: ${normalizeText(deliveryNeighborhood?.value)}`,
-    `Ponto referencia: ${normalizeText(deliveryReference?.value)}`,
+    `Ponto de referencia: ${normalizeText(deliveryReference?.value)}`,
     "",
     `Total: R$ ${totalValue}`,
     "",
@@ -426,7 +1174,6 @@ function updateCheckoutLink() {
   }
 
   const deliveryReady = selectedDelivery === "Retirada" || (selectedDelivery === "Entrega" && isDeliveryFormValid());
-
   if (!cartItems.length || !selectedPayment || !selectedDelivery || !deliveryReady) {
     checkoutButton.href = `${whatsappBase}${encodeURIComponent("Gostaria de ver seu catalogo.")}`;
     checkoutButton.classList.add("is-disabled");
@@ -445,11 +1192,9 @@ function updateOrderSummary() {
   if (orderCount) {
     orderCount.textContent = `${totalItems} ${totalItems === 1 ? "item" : "itens"}`;
   }
-
   if (mobileOrderCount) {
     mobileOrderCount.textContent = `${totalItems} ${totalItems === 1 ? "item" : "itens"}`;
   }
-
   if (mobileOrderTrigger) {
     mobileOrderTrigger.hidden = totalItems === 0;
   }
@@ -468,25 +1213,13 @@ function updateOrderSummary() {
 }
 
 function removeCartItem(index) {
-  const itemNode = orderList?.querySelector(`[data-order-index="${index}"]`);
-
-  if (itemNode) {
-    itemNode.classList.add("is-removing");
-    window.setTimeout(() => {
-      cartItems.splice(index, 1);
-      renderCart();
-    }, 220);
-  } else {
-    cartItems.splice(index, 1);
-    renderCart();
-  }
-
+  cartItems.splice(index, 1);
+  renderCart();
   showToast("Sabor removido");
 }
 
 function changeQuantity(index, delta) {
   const item = cartItems[index];
-
   if (!item) {
     return;
   }
@@ -506,7 +1239,6 @@ function changeQuantity(index, delta) {
 
   item.quantity = nextQty;
   renderCart();
-  bounceCount();
 }
 
 function renderCart() {
@@ -546,11 +1278,11 @@ function renderCart() {
       </div>
       <div class="order-item-actions">
         <div class="order-qty-controls">
-          <button class="order-qty-button" type="button" data-action="decrease" data-index="${index}" aria-label="Diminuir quantidade de ${item.flavor}">-</button>
+          <button class="order-qty-button" type="button" data-action="decrease" data-index="${index}">-</button>
           <span class="order-item-qty">${item.quantity}x</span>
-          <button class="order-qty-button" type="button" data-action="increase" data-index="${index}" aria-label="Aumentar quantidade de ${item.flavor}">+</button>
+          <button class="order-qty-button" type="button" data-action="increase" data-index="${index}">+</button>
         </div>
-        <button class="order-remove" type="button" data-action="remove" data-index="${index}" aria-label="Remover ${item.flavor}">Remover</button>
+        <button class="order-remove" type="button" data-action="remove" data-index="${index}">Remover</button>
       </div>
     </article>
   `).join("");
@@ -558,15 +1290,12 @@ function renderCart() {
   Array.from(orderList.querySelectorAll("[data-action]")).forEach((button) => {
     button.addEventListener("click", () => {
       const index = Number(button.dataset.index);
-
       if (button.dataset.action === "increase") {
         changeQuantity(index, 1);
       }
-
       if (button.dataset.action === "decrease") {
         changeQuantity(index, -1);
       }
-
       if (button.dataset.action === "remove") {
         removeCartItem(index);
       }
@@ -576,239 +1305,21 @@ function renderCart() {
   updateCheckoutLink();
 }
 
-function applyInventoryToUi() {
-  document.querySelectorAll(".flavor-highlight").forEach((highlight) => {
-    const model = normalizeText(highlight.querySelector(".flavor-product-info h5")?.textContent);
-    const config = inventoryState[model];
-
-    if (!config) {
-      return;
-    }
-
-    const priceNode = highlight.querySelector(".flavor-price");
-    if (priceNode) {
-      priceNode.textContent = formatPrice(config.price);
-    }
-
-    const chips = Array.from(highlight.querySelectorAll(".flavor-chip"));
-    chips.forEach((chip) => {
-      const originalFlavor = chip.dataset.flavorName || normalizeText(chip.textContent);
-      chip.dataset.flavorName = originalFlavor;
-      chip.dataset.model = model;
-      const stock = getStock(model, originalFlavor);
-      const isSoldOut = stock <= 0;
-
-      chip.textContent = isSoldOut ? `${originalFlavor} · Indisponivel` : `${originalFlavor} · ${stock} un`;
-      chip.classList.toggle("is-sold-out", isSoldOut);
-      chip.setAttribute("aria-disabled", String(isSoldOut));
-      chip.setAttribute("tabindex", isSoldOut ? "-1" : "0");
-      chip.setAttribute("role", "button");
-      chip.setAttribute("aria-label", isSoldOut ? `${originalFlavor} indisponivel` : `Adicionar ${originalFlavor} ao carrinho`);
-    });
-  });
-
-  renderCart();
+if (galleryPrev) {
+  galleryPrev.addEventListener("click", () => nextGallery(-1));
 }
 
-function addToCart(chip) {
-  const flavor = chip.dataset.flavorName || normalizeText(chip.textContent);
-  const model = chip.dataset.model || normalizeText(chip.closest(".flavor-highlight")?.querySelector(".flavor-product-info h5")?.textContent);
-  const panel = chip.closest(".flavor-brand-panel");
-  const brand = normalizeText(panel?.querySelector(".flavor-panel-head h4")?.textContent || "Cristal Pods");
-
-  if (getStock(model, flavor) <= 0) {
-    showToast("Esse sabor esta indisponivel");
-    return;
-  }
-
-  if (getCartQuantity(model, flavor) >= getStock(model, flavor)) {
-    showToast("Voce atingiu o limite disponivel desse sabor");
-    return;
-  }
-
-  const existingItem = cartItems.find((item) => item.brand === brand && item.model === model && item.flavor === flavor);
-
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    cartItems.push({ brand, model, flavor, quantity: 1 });
-  }
-
-  openCartPanel();
-  renderCart();
-  pulseCart();
-  bounceCount();
-  showToast("Sabor adicionado ao carrinho");
-
-  if (isMobileViewport()) {
-    openMobileCart();
-  }
+if (galleryNext) {
+  galleryNext.addEventListener("click", () => nextGallery(1));
 }
 
-function bindFlavorChips() {
-  document.querySelectorAll(".flavor-chip").forEach((chip) => {
-    if (chip.dataset.bound === "true") {
-      return;
-    }
-
-    chip.dataset.bound = "true";
-
-    chip.addEventListener("click", () => {
-      if (chip.classList.contains("is-sold-out")) {
-        return;
-      }
-      addToCart(chip);
-    });
-
-    chip.addEventListener("keydown", (event) => {
-      if (chip.classList.contains("is-sold-out")) {
-        return;
-      }
-
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        addToCart(chip);
-      }
-    });
-  });
+if (productModalClose) {
+  productModalClose.addEventListener("click", closeProductModal);
 }
 
-function openAdminModal() {
-  if (!adminModal) {
-    return;
-  }
-
-  adminModal.hidden = false;
-  document.body.classList.add("cart-open");
-  syncAdminView();
+if (productModalBackdrop) {
+  productModalBackdrop.addEventListener("click", closeProductModal);
 }
-
-function closeAdminModal() {
-  if (!adminModal) {
-    return;
-  }
-
-  adminModal.hidden = true;
-  document.body.classList.remove("cart-open");
-  if (adminLoginError) {
-    adminLoginError.classList.add("is-hidden");
-  }
-  if (adminSaveStatus) {
-    adminSaveStatus.classList.add("is-hidden");
-  }
-}
-
-function isAdminAuthenticated() {
-  return window.localStorage.getItem(ADMIN_SESSION_KEY) === "true";
-}
-
-function setAdminAuthenticated(value) {
-  window.localStorage.setItem(ADMIN_SESSION_KEY, value ? "true" : "false");
-}
-
-function renderAdminInventory() {
-  if (!adminInventory) {
-    return;
-  }
-
-  adminInventory.innerHTML = Object.entries(inventoryState).map(([model, config]) => `
-    <article class="admin-item" data-admin-model="${model}">
-      <div class="admin-item-head">
-        <div>
-          <h4>${model}</h4>
-          <p>${config.brand}</p>
-        </div>
-        <div class="admin-price-row">
-          <label class="delivery-field">
-            <span>Preco</span>
-            <input class="admin-number-input" type="number" min="0" step="0.01" data-admin-price="${model}" value="${config.price}">
-          </label>
-        </div>
-      </div>
-      <div class="admin-flavors">
-        ${Object.entries(config.flavors).map(([flavor, qty]) => `
-          <div class="admin-flavor-row">
-            <span class="admin-flavor-name">${flavor}</span>
-            <input class="admin-number-input" type="number" min="0" step="1" data-admin-stock="${model}||${flavor}" value="${qty}">
-          </div>
-        `).join("")}
-      </div>
-    </article>
-  `).join("");
-}
-
-function syncAdminView() {
-  const authenticated = isAdminAuthenticated();
-
-  if (adminLogin) {
-    adminLogin.classList.toggle("is-hidden", authenticated);
-  }
-
-  if (adminDashboard) {
-    adminDashboard.classList.toggle("is-hidden", !authenticated);
-  }
-
-  if (authenticated) {
-    renderAdminInventory();
-  }
-}
-
-function saveAdminChanges() {
-  document.querySelectorAll("[data-admin-price]").forEach((input) => {
-    const model = input.dataset.adminPrice;
-    const nextPrice = Number(input.value);
-    if (inventoryState[model] && Number.isFinite(nextPrice)) {
-      inventoryState[model].price = Math.max(0, nextPrice);
-    }
-  });
-
-  document.querySelectorAll("[data-admin-stock]").forEach((input) => {
-    const [model, flavor] = String(input.dataset.adminStock).split("||");
-    const nextQty = Number(input.value);
-    if (inventoryState[model] && flavor in inventoryState[model].flavors && Number.isFinite(nextQty)) {
-      inventoryState[model].flavors[flavor] = Math.max(0, Math.floor(nextQty));
-    }
-  });
-
-  saveInventoryState();
-  applyInventoryToUi();
-  bindFlavorChips();
-
-  if (adminSaveStatus) {
-    adminSaveStatus.textContent = "Alteracoes salvas com sucesso.";
-    adminSaveStatus.classList.remove("is-hidden");
-  }
-
-  showToast("Estoque atualizado");
-}
-
-flavorTabs.forEach((tab) => {
-  tab.addEventListener("click", () => {
-    setActiveFlavor(tab.dataset.brand);
-  });
-});
-
-flavorButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const targetBrand = button.dataset.flavorTarget;
-    setActiveFlavor(targetBrand);
-
-    const activePanel = document.querySelector(`.flavor-brand-panel[data-panel="${targetBrand}"]`);
-
-    if (activePanel) {
-      requestAnimationFrame(() => {
-        activePanel.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-      return;
-    }
-
-    if (flavorsSection) {
-      requestAnimationFrame(() => {
-        flavorsSection.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    }
-  });
-});
 
 paymentMethods.forEach((button) => {
   button.addEventListener("click", () => {
@@ -854,7 +1365,6 @@ if (orderOverlay) {
 if (checkoutButton) {
   checkoutButton.addEventListener("click", (event) => {
     const deliveryReady = selectedDelivery === "Retirada" || (selectedDelivery === "Entrega" && isDeliveryFormValid());
-
     if (!cartItems.length || !selectedPayment || !selectedDelivery || !deliveryReady) {
       event.preventDefault();
       if (!selectedPayment) {
@@ -868,62 +1378,8 @@ if (checkoutButton) {
     }
 
     event.preventDefault();
-    checkoutButton.classList.add("is-loading");
     closeMobileCart();
     window.open(checkoutButton.href, "_blank", "noopener,noreferrer");
-    window.setTimeout(() => {
-      checkoutButton.classList.remove("is-loading");
-    }, 320);
-  });
-}
-
-if (adminEntry) {
-  adminEntry.addEventListener("click", openAdminModal);
-}
-
-if (adminClose) {
-  adminClose.addEventListener("click", closeAdminModal);
-}
-
-if (adminBackdrop) {
-  adminBackdrop.addEventListener("click", closeAdminModal);
-}
-
-if (adminLogin) {
-  adminLogin.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const username = normalizeText(adminUsername?.value).toLowerCase();
-    const password = normalizeText(adminPassword?.value);
-    const isValid = username === ADMIN_USERNAME && password === ADMIN_PASSWORD;
-
-    if (!isValid) {
-      if (adminLoginError) {
-        adminLoginError.classList.remove("is-hidden");
-      }
-      showToast("Login ADM invalido");
-      return;
-    }
-
-    setAdminAuthenticated(true);
-    if (adminLoginError) {
-      adminLoginError.classList.add("is-hidden");
-    }
-    syncAdminView();
-    showToast("Painel ADM liberado");
-  });
-}
-
-if (adminSave) {
-  adminSave.addEventListener("click", saveAdminChanges);
-}
-
-if (adminLogout) {
-  adminLogout.addEventListener("click", () => {
-    setAdminAuthenticated(false);
-    syncAdminView();
-    if (adminUsername) adminUsername.value = "";
-    if (adminPassword) adminPassword.value = "";
-    showToast("Sessao ADM encerrada");
   });
 }
 
@@ -933,9 +1389,14 @@ window.addEventListener("resize", () => {
   }
 });
 
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeProductModal();
+    closeMobileCart();
+  }
+});
+
 updatePaymentSelection();
 updateDeliverySelection();
-applyInventoryToUi();
-bindFlavorChips();
+renderProducts();
 renderCart();
-syncAdminView();
