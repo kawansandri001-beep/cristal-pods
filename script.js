@@ -47,21 +47,21 @@ const defaultInventory = {
     brand: "ICE KING",
     price: 139.9,
     flavors: {
-      "Uva Ice": 1
+      "Uva Ice": 0
     }
   },
   "ICE KING TIGER BLOOD": {
     brand: "ICE KING",
     price: 139.9,
     flavors: {
-      "Tiger Blood": 1
+      "Tiger Blood": 0
     }
   },
   "ICE KING NEW TWIST": {
     brand: "ICE KING",
     price: 139.9,
     flavors: {
-      "Neon Twist": 1
+      "Neon Twist": 0
     }
   },
   "ELF BAR BC 45K GRAPE TWIST": {
