@@ -68,7 +68,7 @@ const defaultInventory = {
     brand: "ELF BAR",
     price: 159.9,
     flavors: {
-      "GRAPE TWIST": 1
+      "GRAPE TWIST": 0
     }
   },
   "ELF BAR BC 45K GREEN APPLE ICE": {
@@ -138,7 +138,7 @@ const defaultInventory = {
     brand: "IGNITE",
     price: 150,
     flavors: {
-      "APPLE ICE // STRABERRY WATERMELON": 1
+      "APPLE ICE // STRABERRY WATERMELON": 0
     }
   },
   "V400 MIX PASSION FRUIT SOUR KIWI // PINEAPPLE ICE WATERMELON": {
@@ -187,14 +187,14 @@ const defaultInventory = {
     brand: "WE FUME",
     price: 80,
     flavors: {
-      "STRAWBERRY BANANA": 1
+      "STRAWBERRY BANANA": 0
     }
   },
   "WE FUME ICE MINT 30.000 PUFFS": {
     brand: "WE FUME",
     price: 80,
     flavors: {
-      "ICE MINT": 1
+      "ICE MINT": 0
     }
   },
   "WE FUME STRAWBERRY KIWI 30.000 PUFFS": {
@@ -213,21 +213,21 @@ const defaultInventory = {
   },
   "VNANO CHERRY LEMONADE": {
     brand: "IGNITE",
-    price: 60,
+    price: 40,
     flavors: {
       "CHERRY LEMONADE": 2
     }
   },
   "VNANO GRAPE ICE": {
     brand: "IGNITE",
-    price: 60,
+    price: 40,
     flavors: {
       "GRAPE ICE": 2
     }
   },
   "VNANO TROPICAL FRUIT": {
     brand: "IGNITE",
-    price: 60,
+    price: 40,
     flavors: {
       "TROPICAL FRUIT": 2
     }
