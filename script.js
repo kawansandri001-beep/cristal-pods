@@ -92,13 +92,6 @@ const defaultInventory = {
       "COCONUT BANANA": 1
     }
   },
-  "BC 10000 BLUEBERRY WATERMELON": {
-    brand: "ELF BAR",
-    price: 99.9,
-    flavors: {
-      "BLUEBERRY WATERMELON": 1
-    }
-  },
   "V155 BANANA ICE ULTRA SLIM": {
     brand: "IGNITE",
     price: 129.9,
@@ -162,13 +155,6 @@ const defaultInventory = {
       "SOUR APPLE ICE": 1
     }
   },
-  "NIK BAR 12K STABERRY ICE CRYSTAL 12.000 PUFFS": {
-    brand: "NIK BAR",
-    price: 99.9,
-    flavors: {
-      "STABERRY ICE": 1
-    }
-  },
   "NIK BAR 12K SPEARMINT CRYSTAL 12.000 PUFFS": {
     brand: "NIK BAR",
     price: 99.9,
@@ -195,20 +181,6 @@ const defaultInventory = {
     price: 80,
     flavors: {
       "ICE MINT": 0
-    }
-  },
-  "WE FUME STRAWBERRY KIWI 30.000 PUFFS": {
-    brand: "WE FUME",
-    price: 80,
-    flavors: {
-      "STRAWBERRY KIWI": 1
-    }
-  },
-  "ELF BAR DUK 35K ICE MINT": {
-    brand: "ELF BAR",
-    price: 140,
-    flavors: {
-      "ICE MINT": 1
     }
   },
   "VNANO CHERRY LEMONADE": {
@@ -395,16 +367,6 @@ const productCatalog = {
     ],
     description: "Sabor COCONUT BANANA com perfil cremoso e tropical, combinando coco e banana em um modelo pratico de 10.000 puffs."
   },
-  "BC 10000 BLUEBERRY WATERMELON": {
-    category: "Pods descartaveis",
-    cover: "./IMAGENS/BC10000 WATERMELON/IMAGEM 1.png",
-    gallery: [
-      "./IMAGENS/BC10000 WATERMELON/IMAGEM 1.png",
-      "./IMAGENS/BC10000 WATERMELON/IMAGEM 2.png",
-      "./IMAGENS/BC10000 WATERMELON/IMAGEM 3.png"
-    ],
-    description: "Sabor BLUEBERRY WATERMELON com mistura frutada de blueberry e melancia, em um modelo pratico de 10.000 puffs com puxada suave."
-  },
   "V155 BANANA ICE ULTRA SLIM": {
     category: "Pods descartaveis",
     cover: "./IMAGENS/v155 banana ice/imagem 1.png",
@@ -492,16 +454,6 @@ const productCatalog = {
     ],
     description: "Modelo NIK BAR Crystal com 12.000 puffs e sabor SOUR APPLE ICE, trazendo perfil gelado de maca verde, visual premium e puxada marcante."
   },
-  "NIK BAR 12K STABERRY ICE CRYSTAL 12.000 PUFFS": {
-    category: "Pods descartaveis",
-    cover: "./IMAGENS/nikbar 12k morango/imagem 1.png",
-    gallery: [
-      "./IMAGENS/nikbar 12k morango/imagem 1.png",
-      "./IMAGENS/nikbar 12k morango/imagem 2.png",
-      "./IMAGENS/nikbar 12k morango/imagem 3.png"
-    ],
-    description: "Modelo NIK BAR Crystal com 12.000 puffs e sabor STABERRY ICE, trazendo perfil gelado de morango, visual premium e puxada marcante."
-  },
   "NIK BAR 12K SPEARMINT CRYSTAL 12.000 PUFFS": {
     category: "Pods descartaveis",
     cover: "./IMAGENS/nik bar 12k spearmint/imagem 1.png",
@@ -536,24 +488,6 @@ const productCatalog = {
       "./IMAGENS/we fume morango banana/we fume de menta.png"
     ],
     description: "Modelo WE FUME com 30.000 puffs e sabor ICE MINT, trazendo refrescancia intensa, alta duracao e puxada marcante."
-  },
-  "WE FUME STRAWBERRY KIWI 30.000 PUFFS": {
-    category: "Pods descartaveis",
-    cover: "./IMAGENS/we fume morango banana/wefume stawberry kiwi.png",
-    gallery: [
-      "./IMAGENS/we fume morango banana/wefume stawberry kiwi.png"
-    ],
-    description: "Modelo WE FUME com 30.000 puffs e sabor STRAWBERRY KIWI, trazendo perfil frutado marcante, alta duracao e puxada suave."
-  },
-  "ELF BAR DUK 35K ICE MINT": {
-    category: "Pods descartaveis",
-    cover: "./IMAGENS/duk 35k ice mint/imagem 1.png",
-    gallery: [
-      "./IMAGENS/duk 35k ice mint/imagem 1.png",
-      "./IMAGENS/duk 35k ice mint/imagem 2.png",
-      "./IMAGENS/duk 35k ice mint/imagem 3.png"
-    ],
-    description: "Modelo ELF BAR DUK com 35.000 puffs e sabor ICE MINT, trazendo refrescancia intensa, alta autonomia e visual premium."
   },
   "VNANO CHERRY LEMONADE": {
     category: "Pods descartaveis",
