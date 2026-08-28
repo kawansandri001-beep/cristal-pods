@@ -89,33 +89,33 @@ const defaultInventory = {
     brand: "ELF BAR",
     price: 99.9,
     flavors: {
-      "COCONUT BANANA": 1
+      "COCONUT BANANA": 0
     }
   },
   "V155 BANANA ICE ULTRA SLIM": {
     brand: "IGNITE",
-    price: 129.9,
+    price: 95,
     flavors: {
       "BANANA ICE": 1
     }
   },
   "V155 ULTRA SLIM STRABERRY KIWI": {
     brand: "IGNITE",
-    price: 129.9,
+    price: 95,
     flavors: {
-      "STRABERRY KIWI": 1
+      "STRABERRY KIWI": 0
     }
   },
   "V155 ULTRA SLIM WATERMELON MIX": {
     brand: "IGNITE",
-    price: 129.9,
+    price: 95,
     flavors: {
       "WATERMELON MIX": 1
     }
   },
   "V155 ULTRA SLIM ICY MINT": {
     brand: "IGNITE",
-    price: 129.9,
+    price: 95,
     flavors: {
       "ICY MINT": 1
     }
@@ -145,14 +145,14 @@ const defaultInventory = {
     brand: "IGNITE",
     price: 150,
     flavors: {
-      "ICY MINT / PEACH GRAPE": 1
+      "ICY MINT / PEACH GRAPE": 0
     }
   },
   "NIK BAR 12K CRYSTAL 12.000 PUFFS": {
     brand: "NIK BAR",
     price: 99.9,
     flavors: {
-      "SOUR APPLE ICE": 1
+      "SOUR APPLE ICE": 0
     }
   },
   "NIK BAR 12K SPEARMINT CRYSTAL 12.000 PUFFS": {
