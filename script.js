@@ -75,14 +75,14 @@ const defaultInventory = {
     brand: "ELF BAR",
     price: 159.9,
     flavors: {
-      "GREEN APPLE ICE": 1
+      "GREEN APPLE ICE": 0
     }
   },
   "ELF BAR BC 45K WATERMELON ICE": {
     brand: "ELF BAR",
     price: 159.9,
     flavors: {
-      "WATERMELON ICE": 1
+      "WATERMELON ICE": 0
     }
   },
   "BC 10000 TOUCH COCONUT BANANA": {
@@ -96,7 +96,7 @@ const defaultInventory = {
     brand: "IGNITE",
     price: 95,
     flavors: {
-      "BANANA ICE": 1
+      "BANANA ICE": 0
     }
   },
   "V155 ULTRA SLIM STRABERRY KIWI": {
@@ -110,7 +110,7 @@ const defaultInventory = {
     brand: "IGNITE",
     price: 95,
     flavors: {
-      "WATERMELON MIX": 1
+      "WATERMELON MIX": 0
     }
   },
   "V155 ULTRA SLIM ICY MINT": {
@@ -194,14 +194,14 @@ const defaultInventory = {
     brand: "IGNITE",
     price: 40,
     flavors: {
-      "GRAPE ICE": 2
+      "GRAPE ICE": 0
     }
   },
   "VNANO TROPICAL FRUIT": {
     brand: "IGNITE",
     price: 40,
     flavors: {
-      "TROPICAL FRUIT": 2
+      "TROPICAL FRUIT": 0
     }
   },
   "NIKBAR 30K": {
