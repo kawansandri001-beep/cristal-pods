@@ -148,13 +148,6 @@ const defaultInventory = {
       "SOUR APPLE ICE": 0
     }
   },
-  "NIK BAR 12K SPEARMINT CRYSTAL 12.000 PUFFS": {
-    brand: "NIK BAR",
-    price: 99.9,
-    flavors: {
-      "SPEARMINT": 1
-    }
-  },
   "NIK BAR 12K MENTHOL CRYSTAL 12.000 PUFFS": {
     brand: "NIK BAR",
     price: 99.9,
@@ -429,15 +422,6 @@ const productCatalog = {
       "./IMAGENS/nik bar aple ice/imagem 2.png"
     ],
     description: "Modelo NIK BAR Crystal com 12.000 puffs e sabor SOUR APPLE ICE, trazendo perfil gelado de maca verde, visual premium e puxada marcante."
-  },
-  "NIK BAR 12K SPEARMINT CRYSTAL 12.000 PUFFS": {
-    category: "Pods descartaveis",
-    cover: "./IMAGENS/nik bar 12k spearmint/imagem 1.png",
-    gallery: [
-      "./IMAGENS/nik bar 12k spearmint/imagem 1.png",
-      "./IMAGENS/nik bar 12k spearmint/IMAGEM 2.png"
-    ],
-    description: "Modelo NIK BAR Crystal com 12.000 puffs e sabor SPEARMINT, trazendo refrescancia intensa, visual premium e puxada marcante."
   },
   "NIK BAR 12K MENTHOL CRYSTAL 12.000 PUFFS": {
     category: "Pods descartaveis",
