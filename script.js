@@ -113,13 +113,6 @@ const defaultInventory = {
       "WATERMELON MIX": 0
     }
   },
-  "V155 ULTRA SLIM ICY MINT": {
-    brand: "IGNITE",
-    price: 95,
-    flavors: {
-      "ICY MINT": 1
-    }
-  },
   "V400MIX GRAPE ICE// STRABERRY": {
     brand: "IGNITE",
     price: 150,
@@ -162,11 +155,11 @@ const defaultInventory = {
       "SPEARMINT": 1
     }
   },
-  "NIK BAR 12K STONE FREEZE CRYSTAL 12.000 PUFFS": {
+  "NIK BAR 12K MENTHOL CRYSTAL 12.000 PUFFS": {
     brand: "NIK BAR",
     price: 99.9,
     flavors: {
-      "STONE FREEZE": 1
+      "MENTHOL": 1
     }
   },
   "WE FUME STRAWBERRY BANANA 30.000 PUFFS": {
@@ -181,13 +174,6 @@ const defaultInventory = {
     price: 80,
     flavors: {
       "ICE MINT": 0
-    }
-  },
-  "VNANO CHERRY LEMONADE": {
-    brand: "IGNITE",
-    price: 40,
-    flavors: {
-      "CHERRY LEMONADE": 2
     }
   },
   "VNANO GRAPE ICE": {
@@ -397,16 +383,6 @@ const productCatalog = {
     ],
     description: "Modelo V155 Ultra Slim com 15.500 puffs e sabor WATERMELON MIX, trazendo perfil refrescante, formato fino e visual premium."
   },
-  "V155 ULTRA SLIM ICY MINT": {
-    category: "Pods descartaveis",
-    cover: "./IMAGENS/V155 SLIM MENTA ICE/IMAGEM 1.png",
-    gallery: [
-      "./IMAGENS/V155 SLIM MENTA ICE/IMAGEM 1.png",
-      "./IMAGENS/V155 SLIM MENTA ICE/IMAGEM 2.png",
-      "./IMAGENS/V155 SLIM MENTA ICE/IMAGEM 3.jpeg"
-    ],
-    description: "Modelo V155 Ultra Slim com 15.500 puffs e sabor ICY MINT, trazendo refrescancia intensa, formato fino e visual premium."
-  },
   "V400MIX GRAPE ICE// STRABERRY": {
     category: "Pods descartaveis",
     cover: "./IMAGENS/IGNITE MIX GRAPE MORANGO/IMAGEM 1.png",
@@ -463,7 +439,7 @@ const productCatalog = {
     ],
     description: "Modelo NIK BAR Crystal com 12.000 puffs e sabor SPEARMINT, trazendo refrescancia intensa, visual premium e puxada marcante."
   },
-  "NIK BAR 12K STONE FREEZE CRYSTAL 12.000 PUFFS": {
+  "NIK BAR 12K MENTHOL CRYSTAL 12.000 PUFFS": {
     category: "Pods descartaveis",
     cover: "./IMAGENS/stone freeze/imagem 1.png",
     gallery: [
@@ -471,7 +447,7 @@ const productCatalog = {
       "./IMAGENS/stone freeze/imagem 2.png",
       "./IMAGENS/stone freeze/imagem 3.png"
     ],
-    description: "Modelo NIK BAR Crystal com 12.000 puffs e sabor STONE FREEZE, trazendo perfil gelado marcante, visual premium e puxada intensa."
+    description: "Modelo NIK BAR Crystal com 12.000 puffs e sabor MENTHOL, trazendo refrescancia marcante, visual premium e puxada intensa."
   },
   "WE FUME STRAWBERRY BANANA 30.000 PUFFS": {
     category: "Pods descartaveis",
@@ -488,14 +464,6 @@ const productCatalog = {
       "./IMAGENS/we fume morango banana/we fume de menta.png"
     ],
     description: "Modelo WE FUME com 30.000 puffs e sabor ICE MINT, trazendo refrescancia intensa, alta duracao e puxada marcante."
-  },
-  "VNANO CHERRY LEMONADE": {
-    category: "Pods descartaveis",
-    cover: "./IMAGENS/VNANO/CHERRY LEMONADE.png",
-    gallery: [
-      "./IMAGENS/VNANO/CHERRY LEMONADE.png"
-    ],
-    description: "Modelo VNANO com 1.000 puffs e sabor CHERRY LEMONADE, trazendo perfil doce e citrico em um formato compacto e pratico."
   },
   "VNANO GRAPE ICE": {
     category: "Pods descartaveis",
