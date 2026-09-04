@@ -113,15 +113,7 @@
             </div>
 
             <div class="product-modal-actions">
-              <button class="primary-button" id="product-add-first" type="button">Pedir ja</button>
-              <a
-                class="secondary-button"
-                href="https://wa.me/557588442493?text=Ola%2C%20quero%20ver%20esse%20produto%20na%20Cristal%20Pods."
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Chamar no WhatsApp
-              </a>
+              <button class="primary-button" id="product-add-first" type="button">Escolha um sabor</button>
             </div>
           </div>
         </div>
@@ -155,9 +147,24 @@
             </div>
           </div>
 
+          <section class="order-totals" id="order-totals" aria-label="Resumo de valores" hidden>
+            <div>
+              <span>Subtotal</span>
+              <strong id="order-subtotal">R$0,00</strong>
+            </div>
+            <div>
+              <span>Taxa de entrega</span>
+              <strong id="order-delivery-fee">A definir</strong>
+            </div>
+            <div class="order-total">
+              <span>Total</span>
+              <strong id="order-total">A definir</strong>
+            </div>
+          </section>
+
           <div class="payment-methods" id="payment-methods">
             <p class="payment-title">Forma de pagamento</p>
-            <p class="delivery-fee-note">Taxa de entrega: +R$10,00 quando escolher Entrega.</p>
+            <p class="delivery-fee-note">Taxa de entrega fixa: R$10,00.</p>
             <div class="payment-options" role="radiogroup" aria-label="Forma de pagamento">
               <button class="payment-option" type="button" data-payment="Pix" aria-pressed="false">Pix</button>
               <button class="payment-option" type="button" data-payment="Dinheiro" aria-pressed="false">Dinheiro</button>
@@ -166,32 +173,29 @@
             <p class="payment-warning" id="payment-warning">Escolha Pix, Dinheiro ou Cartao para finalizar.</p>
           </div>
 
-          <div class="delivery-methods is-hidden" id="delivery-methods">
-            <p class="payment-title">Recebimento</p>
-            <div class="payment-options payment-options-delivery" role="radiogroup" aria-label="Tipo de recebimento">
-              <button class="payment-option delivery-option" type="button" data-delivery="Retirada" aria-pressed="false">Retirada</button>
-              <button class="payment-option delivery-option" type="button" data-delivery="Entrega" aria-pressed="false">Entrega</button>
-            </div>
-            <p class="payment-warning" id="delivery-warning">Escolha Retirada ou Entrega para finalizar.</p>
-          </div>
-
           <div class="delivery-form is-hidden" id="delivery-form">
             <p class="payment-title">Dados para entrega</p>
             <div class="delivery-form-grid">
               <label class="delivery-field">
                 <span>Endereco</span>
-                <input id="delivery-address" type="text" placeholder="Digite seu endereco">
+                <input id="delivery-address" type="text" placeholder="Digite seu endereco" autocomplete="street-address">
               </label>
               <label class="delivery-field">
                 <span>Bairro</span>
-                <input id="delivery-neighborhood" type="text" placeholder="Digite seu bairro">
+                <input id="delivery-neighborhood" type="text" placeholder="Digite seu bairro" autocomplete="address-level2">
               </label>
               <label class="delivery-field">
-                <span>Ponto de referencia</span>
-                <input id="delivery-reference" type="text" placeholder="Digite um ponto de referencia">
+                <span>Cidade</span>
+                <input id="delivery-city" type="text" placeholder="Digite sua cidade" autocomplete="address-level1">
+              </label>
+              <label class="delivery-field">
+                <span>Ponto de referencia (opcional)</span>
+                <input id="delivery-reference" type="text" placeholder="Ex.: perto da farmacia">
               </label>
             </div>
-            <p class="payment-warning" id="delivery-form-warning">Preencha endereco, bairro e ponto de referencia para entrega.</p>
+            <button class="secondary-button location-button" id="use-location-button" type="button">Usar minha localizacao</button>
+            <p class="location-status" id="location-status" role="status" aria-live="polite"></p>
+            <p class="payment-warning" id="delivery-form-warning">Preencha endereco, bairro e cidade para entrega.</p>
           </div>
 
           <div class="order-actions">
