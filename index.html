@@ -60,6 +60,21 @@
           <p>Toque no produto para abrir fotos, descricao e sabores do momento.</p>
         </div>
 
+        <section class="catalog-discovery" aria-label="Busca e filtros de produtos">
+          <div class="catalog-search-row">
+            <label class="catalog-search" for="catalog-search-input">
+              <span>Buscar no catalogo</span>
+              <input id="catalog-search-input" type="search" placeholder="Nome, marca, sabor ou puffs" autocomplete="off">
+            </label>
+            <label class="catalog-toggle catalog-promotion-toggle">
+              <input id="catalog-filter-promotion" type="checkbox">
+              <span>Promocoes</span>
+            </label>
+          </div>
+
+          <p class="catalog-results" id="catalog-results" role="status" aria-live="polite"></p>
+        </section>
+
         <div class="products-grid" id="products-grid"></div>
       </div>
     </section>
@@ -106,6 +121,14 @@
             <h3 id="product-modal-title"></h3>
             <p class="product-price" id="product-modal-price"></p>
             <p class="product-description" id="product-modal-description"></p>
+            <section class="product-info-section" id="product-specifications" hidden>
+              <h4>Caracteristicas</h4>
+              <ul id="product-specifications-list"></ul>
+            </section>
+            <section class="product-info-section" id="product-why-choose" hidden>
+              <h4>Por que escolher este modelo?</h4>
+              <ol id="product-why-choose-list"></ol>
+            </section>
 
             <div class="product-flavors">
               <p>Sabores disponiveis</p>

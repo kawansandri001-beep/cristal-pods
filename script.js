@@ -1,4 +1,7 @@
 const productsGrid = document.getElementById("products-grid");
+const catalogSearchInput = document.getElementById("catalog-search-input");
+const catalogFilterPromotion = document.getElementById("catalog-filter-promotion");
+const catalogResults = document.getElementById("catalog-results");
 const productModal = document.getElementById("product-modal");
 const productModalBackdrop = document.getElementById("product-modal-backdrop");
 const productModalClose = document.getElementById("product-modal-close");
@@ -6,6 +9,10 @@ const productModalTitle = document.getElementById("product-modal-title");
 const productModalBrand = document.getElementById("product-modal-brand");
 const productModalPrice = document.getElementById("product-modal-price");
 const productModalDescription = document.getElementById("product-modal-description");
+const productSpecifications = document.getElementById("product-specifications");
+const productSpecificationsList = document.getElementById("product-specifications-list");
+const productWhyChoose = document.getElementById("product-why-choose");
+const productWhyChooseList = document.getElementById("product-why-choose-list");
 const productGalleryImage = document.getElementById("product-gallery-image");
 const galleryPrev = document.getElementById("gallery-prev");
 const galleryNext = document.getElementById("gallery-next");
@@ -37,6 +44,8 @@ const deliveryReference = document.getElementById("delivery-reference");
 const useLocationButton = document.getElementById("use-location-button");
 const locationStatus = document.getElementById("location-status");
 const INVENTORY_STORAGE_KEY = "cristal-pods-inventory";
+const INVENTORY_STATE_VERSION_KEY = "cristal-pods-inventory-version";
+const INVENTORY_STATE_VERSION = "stock-reset-2026-09-04";
 const whatsappBase = "https://wa.me/557588442493?text=";
 const DELIVERY_FEE = 10;
 const DELIVERY_METHOD = "Entrega";
@@ -235,6 +244,247 @@ const products = {
     ],
     "description": "Modelo V400MIX com proposta premium, alta autonomia e sabor GRAPE ICE // STRABERRY para quem busca puxada marcante e visual moderno."
   },
+  "ignite-v400-mix": {
+    "id": "ignite-v400-mix",
+    "model": "IGNITE V400 MIX",
+    "brand": "IGNITE",
+    "price": 145,
+    "flavors": {
+      "MORANGO COM MELANCIA ICE E BABALU DE UVA": 1
+    },
+    "category": "Pod descartavel",
+    "cover": "./IMAGENS/IGNINE MIX 400/1.png",
+    "gallery": [
+      "./IMAGENS/IGNINE MIX 400/1.png",
+      "./IMAGENS/IGNINE MIX 400/2.png",
+      "./IMAGENS/IGNINE MIX 400/3.png"
+    ],
+    "flavorGalleryIndex": {
+      "MORANGO COM MELANCIA ICE E BABALU DE UVA": 2
+    },
+    "description": "O Ignite V400 Mix une alta autonomia e um perfil duplo marcante: morango com melancia gelada de um lado e babalu de uva do outro, para variar a experiencia sem complicacao.",
+    "specifications": [
+      "Ate 40.000 puffs",
+      "Recarga pratica via USB-C",
+      "Dois perfis de sabor em um unico aparelho",
+      "Design compacto e confortavel"
+    ],
+    "whyChoose": [
+      "Alta autonomia para acompanhar a rotina, com ate 40.000 puffs.",
+      "Sabor marcante do inicio ao fim: Morango com Melancia Ice e Babalu de Uva.",
+      "Recarga pratica via USB-C.",
+      "Design compacto, confortavel e facil de transportar.",
+      "Experiencia simplificada, sem configuracoes complexas."
+    ]
+  },
+  "ignite-v155-ultra-slim": {
+    "id": "ignite-v155-ultra-slim",
+    "model": "IGNITE V155 ULTRA SLIM",
+    "brand": "IGNITE",
+    "price": 95,
+    "flavors": {
+      "GRAPE ICE": 1,
+      "STRAWBERRY KIWI": 1,
+      "WATERMELON ICE": 1,
+      "KIWI FRUIT GUAVA": 1
+    },
+    "category": "Pod descartavel",
+    "cover": "./IMAGENS/v155 ultra slim/1.png",
+    "gallery": [
+      "./IMAGENS/v155 ultra slim/1.png",
+      "./IMAGENS/v155 ultra slim/2.png",
+      "./IMAGENS/v155 ultra slim/GRAPE ICE.png",
+      "./IMAGENS/v155 ultra slim/STABERRY KIWI.png",
+      "./IMAGENS/v155 ultra slim/WATERMELON ICE.webp",
+      "./IMAGENS/v155 ultra slim/KIWI FRUIT GUAVA.png"
+    ],
+    "flavorImages": {
+      "GRAPE ICE": "./IMAGENS/v155 ultra slim/GRAPE ICE.png",
+      "STRAWBERRY KIWI": "./IMAGENS/v155 ultra slim/STABERRY KIWI.png",
+      "WATERMELON ICE": "./IMAGENS/v155 ultra slim/WATERMELON ICE.webp",
+      "KIWI FRUIT GUAVA": "./IMAGENS/v155 ultra slim/KIWI FRUIT GUAVA.png"
+    },
+    "description": "O Ignite V155 Ultra Slim combina formato fino, autonomia de ate 15.500 puffs e sabores frutados com toque gelado para uma experiencia pratica no dia a dia.",
+    "specifications": [
+      "Ate 15.500 puffs",
+      "Bateria recarregavel de 650 mAh",
+      "Carregamento Tipo-C",
+      "Modos Boost e Eco"
+    ],
+    "whyChoose": [
+      "Formato Ultra Slim, fino e confortavel para transportar.",
+      "Autonomia para acompanhar a rotina com ate 15.500 puffs.",
+      "Quatro sabores disponiveis para escolher no mesmo modelo.",
+      "Recarga pratica por Tipo-C.",
+      "Modos Boost e Eco para ajustar a experiencia."
+    ]
+  },
+  "ignite-v300": {
+    "id": "ignite-v300",
+    "model": "IGNITE V300",
+    "brand": "IGNITE",
+    "price": 130,
+    "flavors": {
+      "COCONUT BANANA": 1,
+      "GRAPE ICE": 1,
+      "ICY MINT": 1,
+      "GREEN APPLE": 1
+    },
+    "category": "Pod descartavel",
+    "cover": "./IMAGENS/IGNITE V300/1.png",
+    "gallery": [
+      "./IMAGENS/IGNITE V300/1.png",
+      "./IMAGENS/IGNITE V300/COCONOUT BANANA.png",
+      "./IMAGENS/IGNITE V300/GRAPE ICE.png",
+      "./IMAGENS/IGNITE V300/ICY MINT.png",
+      "./IMAGENS/IGNITE V300/GREEN APPLE.png"
+    ],
+    "flavorImages": {
+      "COCONUT BANANA": "./IMAGENS/IGNITE V300/COCONOUT BANANA.png",
+      "GRAPE ICE": "./IMAGENS/IGNITE V300/GRAPE ICE.png",
+      "ICY MINT": "./IMAGENS/IGNITE V300/ICY MINT.png",
+      "GREEN APPLE": "./IMAGENS/IGNITE V300/GREEN APPLE.png"
+    },
+    "description": "O Ignite V300 traz um formato Ultra Slim com tecnologia Dual Mesh, visual leve e sabores marcantes para uma experiencia direta e pratica.",
+    "specifications": [
+      "Formato Ultra Slim, leve e confortavel",
+      "Tecnologia Dual Mesh",
+      "Indicadores visuais de bateria e liquido",
+      "Quatro sabores disponiveis"
+    ],
+    "whyChoose": [
+      "Design compacto para levar com facilidade.",
+      "Tecnologia Dual Mesh para uma experiencia consistente.",
+      "Quatro perfis de sabor para escolher.",
+      "Leitura visual pratica de bateria e liquido.",
+      "Uso simples, sem configuracoes complexas."
+    ]
+  },
+  "elf-bar-ice-king": {
+    "id": "elf-bar-ice-king",
+    "model": "ELF BAR ICE KING",
+    "brand": "ELF BAR",
+    "price": 140,
+    "flavors": {
+      "MIAMI MINT": 1,
+      "TIGERS BLOOD": 1,
+      "GRAPE ICE": 1,
+      "WATERMELON": 1
+    },
+    "category": "Pod descartavel",
+    "cover": "./IMAGENS/ELF BAR ICE KING/1.png",
+    "gallery": [
+      "./IMAGENS/ELF BAR ICE KING/1.png",
+      "./IMAGENS/ELF BAR ICE KING/2.png",
+      "./IMAGENS/ELF BAR ICE KING/MIAMI MINT.png",
+      "./IMAGENS/ELF BAR ICE KING/TIGERS BLOOD.jpg",
+      "./IMAGENS/ELF BAR ICE KING/UVA ICE.png",
+      "./IMAGENS/ELF BAR ICE KING/WATERMELON ICE.png"
+    ],
+    "flavorImages": {
+      "MIAMI MINT": "./IMAGENS/ELF BAR ICE KING/MIAMI MINT.png",
+      "TIGERS BLOOD": "./IMAGENS/ELF BAR ICE KING/TIGERS BLOOD.jpg",
+      "GRAPE ICE": "./IMAGENS/ELF BAR ICE KING/UVA ICE.png",
+      "WATERMELON": "./IMAGENS/ELF BAR ICE KING/WATERMELON ICE.png"
+    },
+    "description": "O Elf Bar Ice King combina um visual moderno com quatro sabores gelados e frutados para uma escolha pratica e marcante.",
+    "specifications": [
+      "Quatro sabores disponiveis",
+      "Formato pratico para o dia a dia",
+      "Indicadores visuais no aparelho",
+      "Design moderno"
+    ],
+    "whyChoose": [
+      "Escolha entre quatro perfis de sabor.",
+      "Opcoes geladas, frutadas e refrescantes.",
+      "Visual moderno e facil de usar.",
+      "Selecao simples de sabor no pedido.",
+      "Imagem especifica exibida para cada sabor."
+    ]
+  },
+  "elf-bar-30k": {
+    "id": "elf-bar-30k",
+    "model": "ELF BAR 30K",
+    "brand": "ELF BAR",
+    "price": 119.9,
+    "flavors": {
+      "GREEN APPLE ICE": 1,
+      "BUBBALOO TUTTI FRUTTI": 1,
+      "WATERMELON ICE": 1
+    },
+    "category": "Pod descartavel",
+    "cover": "./IMAGENS/elf bar 30k/1.png",
+    "gallery": [
+      "./IMAGENS/elf bar 30k/1.png",
+      "./IMAGENS/elf bar 30k/2.png",
+      "./IMAGENS/elf bar 30k/GREEN APPLE ICE.png",
+      "./IMAGENS/elf bar 30k/BUBBALOO TUTTI FRUTTI.png",
+      "./IMAGENS/elf bar 30k/WATERMELON ICE.png"
+    ],
+    "flavorImages": {
+      "GREEN APPLE ICE": "./IMAGENS/elf bar 30k/GREEN APPLE ICE.png",
+      "BUBBALOO TUTTI FRUTTI": "./IMAGENS/elf bar 30k/BUBBALOO TUTTI FRUTTI.png",
+      "WATERMELON ICE": "./IMAGENS/elf bar 30k/WATERMELON ICE.png"
+    },
+    "description": "O Elf Bar 30K entrega ate 30.000 puffs em um formato pratico, com sabores frutados e gelados para quem busca uma experiencia marcante.",
+    "specifications": [
+      "Ate 30.000 puffs",
+      "Tres sabores disponiveis",
+      "Formato pratico para o dia a dia",
+      "Design moderno"
+    ],
+    "whyChoose": [
+      "Alta autonomia com ate 30.000 puffs.",
+      "Tres perfis de sabor para escolher.",
+      "Opcoes frutadas e refrescantes.",
+      "Imagem especifica para cada sabor selecionado.",
+      "Pedido simples e direto pelo catalogo."
+    ]
+  },
+  "we-fume-30k": {
+    "id": "we-fume-30k",
+    "model": "WE FUME 30K",
+    "brand": "WE FUME",
+    "price": 80,
+    "originalPrice": 129.9,
+    "isPromotion": true,
+    "flavors": {
+      "STAWBERRY WATERMELON": 1,
+      "MIAMI MIX": 1,
+      "STAWBERRY BANANA": 1,
+      "FROZEN TRIPPLE APPLE": 1
+    },
+    "category": "Pod descartavel",
+    "cover": "./IMAGENS/WE FUME/1.png",
+    "gallery": [
+      "./IMAGENS/WE FUME/1.png",
+      "./IMAGENS/WE FUME/2.png",
+      "./IMAGENS/WE FUME/STAWBERRY WATERMELON.png",
+      "./IMAGENS/WE FUME/MIAMI MIX.png",
+      "./IMAGENS/WE FUME/BANANA STAWBERRY.png",
+      "./IMAGENS/WE FUME/FROZEN TRIPLE APP.png"
+    ],
+    "flavorImages": {
+      "STAWBERRY WATERMELON": "./IMAGENS/WE FUME/STAWBERRY WATERMELON.png",
+      "MIAMI MIX": "./IMAGENS/WE FUME/MIAMI MIX.png",
+      "STAWBERRY BANANA": "./IMAGENS/WE FUME/BANANA STAWBERRY.png",
+      "FROZEN TRIPPLE APPLE": "./IMAGENS/WE FUME/FROZEN TRIPLE APP.png"
+    },
+    "description": "O WE FUME 30K combina ate 30.000 puffs, formato pratico e sabores frutados para quem procura uma opcao com excelente custo-beneficio.",
+    "specifications": [
+      "Ate 30.000 puffs",
+      "Quatro sabores disponiveis",
+      "Formato pratico para o dia a dia",
+      "Produto em promocao"
+    ],
+    "whyChoose": [
+      "Preco promocional de R$80,00.",
+      "Autonomia de ate 30.000 puffs.",
+      "Quatro perfis de sabor para escolher.",
+      "Imagem especifica exibida para cada sabor.",
+      "Pedido simples e direto pelo catalogo."
+    ]
+  },
   "v400-mix-apple-ice-straberry-watermelon": {
     "id": "v400-mix-apple-ice-straberry-watermelon",
     "model": "V400 MIX APPLE ICE// STRABERRY WATERMELON",
@@ -258,7 +508,7 @@ const products = {
     "brand": "IGNITE",
     "price": 150,
     "flavors": {
-      "PASSION FRUIT SOUR KIWI // PINEAPPLE ICE WATERMELON": 1
+      "PASSION FRUIT SOUR KIWI // PINEAPPLE ICE WATERMELON": 0
     },
     "category": "Pods descartaveis",
     "cover": "./IMAGENS/V400 MIX MARACUJA ABACAXI/IMAGEM 1.webp",
@@ -306,7 +556,7 @@ const products = {
     "brand": "NIK BAR",
     "price": 99.9,
     "flavors": {
-      "MENTHOL": 1
+      "MENTHOL": 0
     },
     "category": "Pods descartaveis",
     "cover": "./IMAGENS/stone freeze/imagem 1.webp",
@@ -577,6 +827,12 @@ function normalizeText(value) {
 
 function loadProductState() {
   try {
+    if (window.localStorage.getItem(INVENTORY_STATE_VERSION_KEY) !== INVENTORY_STATE_VERSION) {
+      window.localStorage.removeItem(INVENTORY_STORAGE_KEY);
+      window.localStorage.setItem(INVENTORY_STATE_VERSION_KEY, INVENTORY_STATE_VERSION);
+      return;
+    }
+
     const saved = window.localStorage.getItem(INVENTORY_STORAGE_KEY);
     if (!saved) {
       return;
@@ -630,6 +886,17 @@ function formatPrice(value) {
   return `R$${Number(value).toFixed(2).replace(".", ",")}`;
 }
 
+function hasPromotionalPrice(product) {
+  return Number(product.originalPrice) > Number(product.price);
+}
+
+function formatProductPrice(product) {
+  const previousPrice = hasPromotionalPrice(product)
+    ? `<span class="product-price-old">${formatPrice(product.originalPrice)}</span>`
+    : "";
+  return `${previousPrice}<strong class="product-price">${formatPrice(product.price)}</strong>`;
+}
+
 function isMobileViewport() {
   return window.matchMedia("(max-width: 768px)").matches;
 }
@@ -647,17 +914,127 @@ function getCartQuantity(productId, flavor) {
   return item ? item.quantity : 0;
 }
 
-function getAvailableProducts() {
-  return Object.values(products)
-    .sort((a, b) => {
-      const aStock = getTotalStock(a.id);
-      const bStock = getTotalStock(b.id);
-      if ((aStock > 0) !== (bStock > 0)) {
-        return bStock - aStock;
-      }
-      return a.model.localeCompare(b.model, "pt-BR");
-    })
-    .map((product) => product.id);
+function normalizeSearchText(value) {
+  const normalizedValue = String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+
+  const flavorAliases = {
+    grape: "uva",
+    uva: "uva",
+    strawberry: "morango",
+    stawberry: "morango",
+    morango: "morango",
+    watermelon: "melancia",
+    melancia: "melancia",
+    apple: "maca",
+    maca: "maca",
+    green: "verde",
+    verde: "verde",
+    ice: "gelado",
+    icy: "gelado",
+    frozen: "gelado",
+    gelado: "gelado",
+    gelada: "gelado",
+    gelados: "gelado",
+    geladas: "gelado",
+    gelo: "gelado",
+    mint: "menta",
+    menthol: "menta",
+    menta: "menta",
+    banana: "banana",
+    coconut: "coco",
+    coconout: "coco",
+    coco: "coco",
+    kiwi: "kiwi",
+    guava: "goiaba",
+    goiaba: "goiaba",
+    cherry: "cereja",
+    cereja: "cereja",
+    pineapple: "abacaxi",
+    abacaxi: "abacaxi",
+    peach: "pessego",
+    pessego: "pessego",
+    passion: "maracuja",
+    maracuja: "maracuja",
+    lemon: "limao",
+    lime: "limao",
+    limao: "limao",
+    babalu: "chiclete",
+    bubbaloo: "chiclete",
+    chiclete: "chiclete"
+  };
+
+  return normalizedValue
+    .split(" ")
+    .map((term) => flavorAliases[term] || term)
+    .join(" ");
+}
+
+function getProductPuffs(product) {
+  const productText = `${product.model} ${product.description}`;
+  const match = productText.match(/(\d{1,3}(?:[.\s]?\d{3})?)\s*(puffs?|k\b)/i);
+  if (!match) {
+    return 0;
+  }
+
+  const amount = Number(match[1].replace(/[^0-9]/g, ""));
+  return /k\b/i.test(match[2]) ? amount * 1000 : amount;
+}
+
+function isPromotion(product) {
+  return product.isPromotion === true || Number(product.originalPrice) > Number(product.price);
+}
+
+function getCatalogFilters() {
+  return {
+    query: normalizeSearchText(catalogSearchInput?.value),
+    promotion: Boolean(catalogFilterPromotion?.checked)
+  };
+}
+
+function matchesSearchTerms(searchText, query) {
+  if (!query) {
+    return true;
+  }
+
+  const searchableTerms = new Set(searchText.split(" "));
+  return query.split(" ").every((term) => searchableTerms.has(term));
+}
+
+function getFilteredProducts() {
+  const filters = getCatalogFilters();
+  const matchingProducts = Object.values(products).filter((product) => {
+    const totalStock = getTotalStock(product.id);
+    const productPuffs = getProductPuffs(product);
+    const searchText = normalizeSearchText([
+      product.model,
+      product.brand,
+      product.description,
+      productPuffs,
+      ...Object.keys(product.flavors)
+    ].join(" "));
+
+    return totalStock > 0
+      && matchesSearchTerms(searchText, filters.query)
+      && (!filters.promotion || isPromotion(product));
+  });
+
+  return matchingProducts.sort((firstProduct, secondProduct) => {
+    return firstProduct.model.localeCompare(secondProduct.model, "pt-BR");
+  });
+}
+
+function updateCatalogResults(total) {
+  if (!catalogResults) {
+    return;
+  }
+
+  const label = total === 1 ? "produto encontrado" : "produtos encontrados";
+  catalogResults.textContent = `${total} ${label}`;
 }
 
 function showToast(message) {
@@ -676,13 +1053,37 @@ function showToast(message) {
   }, 1800);
 }
 
+function highlightOrderItem(index) {
+  const item = orderList?.querySelector(`[data-order-index="${index}"]`);
+  if (!item) {
+    return;
+  }
+
+  item.classList.remove("is-updated");
+  void item.offsetWidth;
+  item.classList.add("is-updated");
+}
+
 function renderProducts() {
   if (!productsGrid) {
     return;
   }
 
-  productsGrid.innerHTML = getAvailableProducts().filter((productId) => getTotalStock(productId) > 0).map((productId) => {
-    const product = products[productId];
+  const filteredProducts = getFilteredProducts();
+  updateCatalogResults(filteredProducts.length);
+
+  if (!filteredProducts.length) {
+    productsGrid.innerHTML = `
+      <div class="catalog-empty">
+        <strong>Nenhum produto encontrado</strong>
+        <span>Ajuste sua busca ou limpe os filtros para tentar novamente.</span>
+      </div>
+    `;
+    return;
+  }
+
+  productsGrid.innerHTML = filteredProducts.map((product) => {
+    const productId = product.id;
     const totalStock = getTotalStock(productId);
     const availableLabel = totalStock > 0 ? `${totalStock} unidades disponiveis` : "Indisponivel";
 
@@ -697,7 +1098,9 @@ function renderProducts() {
           <p class="product-excerpt">${product.description}</p>
           <span class="stock-label ${totalStock <= 0 ? "is-out" : ""}">${availableLabel}</span>
           <div class="product-card-footer">
-            <strong class="product-price">${totalStock > 0 ? formatPrice(product.price) : "Indisponivel"}</strong>
+            <div class="product-price-group">
+              ${totalStock > 0 ? formatProductPrice(product) : '<strong class="product-price">Indisponivel</strong>'}
+            </div>
             <button class="product-open-button" type="button" data-open-product="${productId}">
               ${totalStock > 0 ? "Ver produto" : "Consultar"}
             </button>
@@ -737,6 +1140,88 @@ function closeProductModal() {
   document.body.classList.remove("cart-open");
 }
 
+function updateProductAddButton(hasAvailableFlavor) {
+  if (!productAddFirst) {
+    return;
+  }
+
+  productAddFirst.disabled = !hasAvailableFlavor || !selectedProductFlavor;
+  productAddFirst.textContent = hasAvailableFlavor
+    ? (selectedProductFlavor ? "Adicionar ao carrinho" : "Escolha um sabor")
+    : "Sem estoque";
+}
+
+function handleProductAdd() {
+  const productId = activeProductId;
+  const flavor = selectedProductFlavor;
+
+  if (!productId || !flavor) {
+    showToast("Escolha um sabor antes de adicionar ao carrinho");
+    return;
+  }
+
+  if (addFlavorToCart(productId, flavor)) {
+    closeProductModal();
+    focusOrderPanel();
+  }
+}
+
+function selectProductFlavor(flavor) {
+  const product = products[activeProductId];
+  if (!product || getStock(activeProductId, flavor) <= 0) {
+    return;
+  }
+
+  selectedProductFlavor = flavor;
+  Array.from(productFlavorList.querySelectorAll("[data-modal-flavor]")).forEach((button) => {
+    const isSelected = button.dataset.modalFlavor === flavor;
+    button.classList.toggle("is-selected", isSelected);
+    button.setAttribute("aria-pressed", String(isSelected));
+  });
+  updateProductAddButton(true);
+
+  const flavorImage = product.flavorImages?.[flavor];
+  const mappedImageIndex = product.gallery?.indexOf(flavorImage);
+  const flavorGalleryIndex = Number.isInteger(mappedImageIndex) && mappedImageIndex >= 0
+    ? mappedImageIndex
+    : product.flavorGalleryIndex?.[flavor];
+  setProductGalleryImage(product, Number.isInteger(flavorGalleryIndex) ? flavorGalleryIndex : 0, true);
+  showToast("Sabor selecionado. Adicione ao carrinho para continuar.");
+}
+
+function renderProductInfoSection(section, list, items) {
+  if (!section || !list) {
+    return;
+  }
+
+  const content = Array.isArray(items) ? items : [];
+  section.hidden = content.length === 0;
+  list.innerHTML = content.map((item) => `<li>${item}</li>`).join("");
+}
+
+function setProductGalleryImage(product, index, shouldAnimate = false) {
+  const gallery = product.gallery || [product.cover];
+  activeGalleryIndex = (index + gallery.length) % gallery.length;
+
+  if (productGalleryImage) {
+    if (shouldAnimate) {
+      productGalleryImage.classList.remove("is-changing");
+      void productGalleryImage.offsetWidth;
+    }
+    productGalleryImage.src = gallery[activeGalleryIndex] || product.cover;
+    productGalleryImage.alt = product.model;
+    if (shouldAnimate) {
+      productGalleryImage.classList.add("is-changing");
+    }
+  }
+
+  Array.from(galleryDots?.querySelectorAll("[data-gallery-index]") || []).forEach((dot) => {
+    const isActive = Number(dot.dataset.galleryIndex) === activeGalleryIndex;
+    dot.classList.toggle("is-active", isActive);
+    dot.setAttribute("aria-pressed", String(isActive));
+  });
+}
+
 function renderProductModal() {
   const product = products[activeProductId];
 
@@ -745,15 +1230,15 @@ function renderProductModal() {
   }
 
   const gallery = product.gallery || [product.cover];
-  const currentImage = gallery[activeGalleryIndex] || gallery[0];
   productModalBrand.textContent = `${product.brand} \u2022 ${product.category}`;
   productModalTitle.textContent = product.model;
-  productModalPrice.textContent = getTotalStock(activeProductId) > 0 ? formatPrice(product.price) : "Indisponivel";
+  productModalPrice.innerHTML = getTotalStock(activeProductId) > 0
+    ? formatProductPrice(product)
+    : "Indisponivel";
   productModalDescription.textContent = product.description;
-  if (productGalleryImage) {
-    productGalleryImage.src = currentImage;
-    productGalleryImage.alt = product.model;
-  }
+  renderProductInfoSection(productSpecifications, productSpecificationsList, product.specifications);
+  renderProductInfoSection(productWhyChoose, productWhyChooseList, product.whyChoose);
+  setProductGalleryImage(product, activeGalleryIndex);
 
   galleryDots.innerHTML = gallery.map((_, index) => `
     <button
@@ -766,8 +1251,7 @@ function renderProductModal() {
 
   Array.from(galleryDots.querySelectorAll("[data-gallery-index]")).forEach((dot) => {
     dot.addEventListener("click", () => {
-      activeGalleryIndex = Number(dot.dataset.galleryIndex);
-      renderProductModal();
+      setProductGalleryImage(product, Number(dot.dataset.galleryIndex), true);
     });
   });
 
@@ -780,7 +1264,6 @@ function renderProductModal() {
     `;
     productAddFirst.disabled = true;
     productAddFirst.textContent = "Aguardando sabores";
-    productAddFirst.onclick = null;
     return;
   }
 
@@ -804,27 +1287,12 @@ function renderProductModal() {
       if (button.classList.contains("is-sold-out")) {
         return;
       }
-      const flavor = button.dataset.modalFlavor || "";
-      selectedProductFlavor = flavor;
-      renderProductModal();
-      showToast("Sabor selecionado. Adicione ao carrinho para continuar.");
+      selectProductFlavor(button.dataset.modalFlavor || "");
     });
   });
 
   const hasAvailableFlavor = flavorEntries.some(([, qty]) => qty > 0);
-  productAddFirst.disabled = !hasAvailableFlavor || !selectedProductFlavor;
-  productAddFirst.textContent = hasAvailableFlavor
-    ? (selectedProductFlavor ? "Adicionar ao carrinho" : "Escolha um sabor")
-    : "Sem estoque";
-  productAddFirst.onclick = () => {
-    if (!selectedProductFlavor) {
-      showToast("Escolha um sabor antes de adicionar ao carrinho");
-      return;
-    }
-    if (addFlavorToCart(activeProductId, selectedProductFlavor)) {
-      closeProductModal();
-    }
-  };
+  updateProductAddButton(hasAvailableFlavor);
 }
 
 function nextGallery(step) {
@@ -860,6 +1328,7 @@ function addFlavorToCart(productId, flavor) {
 
   openCartPanel();
   renderCart();
+  highlightOrderItem(cartItems.length - 1);
   showToast("Sabor adicionado ao carrinho");
   return true;
 }
@@ -1159,6 +1628,7 @@ function changeQuantity(index, delta) {
 
   item.quantity = nextQty;
   renderCart();
+  highlightOrderItem(index);
 }
 
 function renderCart() {
@@ -1240,6 +1710,16 @@ if (productModalClose) {
 
 if (productModalBackdrop) {
   productModalBackdrop.addEventListener("click", closeProductModal);
+}
+
+if (productAddFirst) {
+  productAddFirst.addEventListener("click", handleProductAdd);
+}
+
+catalogFilterPromotion?.addEventListener("change", renderProducts);
+
+if (catalogSearchInput) {
+  catalogSearchInput.addEventListener("input", renderProducts);
 }
 
 paymentMethods.forEach((button) => {
