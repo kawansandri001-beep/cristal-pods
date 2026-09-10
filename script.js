@@ -45,7 +45,7 @@ const useLocationButton = document.getElementById("use-location-button");
 const locationStatus = document.getElementById("location-status");
 const INVENTORY_STORAGE_KEY = "cristal-pods-inventory";
 const INVENTORY_STATE_VERSION_KEY = "cristal-pods-inventory-version";
-const INVENTORY_STATE_VERSION = "stock-reset-2026-09-04";
+const INVENTORY_STATE_VERSION = "stock-reset-2026-09-10";
 const whatsappBase = "https://wa.me/557588442493?text=";
 const DELIVERY_FEE = 10;
 const DELIVERY_METHOD = "Entrega";
@@ -250,7 +250,7 @@ const products = {
     "brand": "IGNITE",
     "price": 145,
     "flavors": {
-      "MORANGO COM MELANCIA ICE E BABALU DE UVA": 1
+      "MORANGO COM MELANCIA ICE E BABALU DE UVA": 0
     },
     "category": "Pod descartavel",
     "cover": "./IMAGENS/IGNINE MIX 400/1.png",
@@ -283,10 +283,10 @@ const products = {
     "brand": "IGNITE",
     "price": 95,
     "flavors": {
-      "GRAPE ICE": 1,
-      "STRAWBERRY KIWI": 1,
-      "WATERMELON ICE": 1,
-      "KIWI FRUIT GUAVA": 1
+      "GRAPE ICE": 0,
+      "STRAWBERRY KIWI": 0,
+      "WATERMELON ICE": 0,
+      "KIWI FRUIT GUAVA": 0
     },
     "category": "Pod descartavel",
     "cover": "./IMAGENS/v155 ultra slim/1.png",
@@ -327,7 +327,6 @@ const products = {
     "flavors": {
       "COCONUT BANANA": 1,
       "GRAPE ICE": 1,
-      "ICY MINT": 1,
       "GREEN APPLE": 1
     },
     "category": "Pod descartavel",
@@ -336,13 +335,11 @@ const products = {
       "./IMAGENS/IGNITE V300/1.png",
       "./IMAGENS/IGNITE V300/COCONOUT BANANA.png",
       "./IMAGENS/IGNITE V300/GRAPE ICE.png",
-      "./IMAGENS/IGNITE V300/ICY MINT.png",
       "./IMAGENS/IGNITE V300/GREEN APPLE.png"
     ],
     "flavorImages": {
       "COCONUT BANANA": "./IMAGENS/IGNITE V300/COCONOUT BANANA.png",
       "GRAPE ICE": "./IMAGENS/IGNITE V300/GRAPE ICE.png",
-      "ICY MINT": "./IMAGENS/IGNITE V300/ICY MINT.png",
       "GREEN APPLE": "./IMAGENS/IGNITE V300/GREEN APPLE.png"
     },
     "description": "O Ignite V300 traz um formato Ultra Slim com tecnologia Dual Mesh, visual leve e sabores marcantes para uma experiencia direta e pratica.",
@@ -366,26 +363,17 @@ const products = {
     "brand": "ELF BAR",
     "price": 140,
     "flavors": {
-      "MIAMI MINT": 1,
-      "TIGERS BLOOD": 1,
-      "GRAPE ICE": 1,
-      "WATERMELON": 1
+      "TIGER BLOOD": 1
     },
     "category": "Pod descartavel",
     "cover": "./IMAGENS/ELF BAR ICE KING/1.png",
     "gallery": [
       "./IMAGENS/ELF BAR ICE KING/1.png",
       "./IMAGENS/ELF BAR ICE KING/2.png",
-      "./IMAGENS/ELF BAR ICE KING/MIAMI MINT.png",
-      "./IMAGENS/ELF BAR ICE KING/TIGERS BLOOD.jpg",
-      "./IMAGENS/ELF BAR ICE KING/UVA ICE.png",
-      "./IMAGENS/ELF BAR ICE KING/WATERMELON ICE.png"
+      "./IMAGENS/ELF BAR ICE KING/TIGERS BLOOD.jpg"
     ],
     "flavorImages": {
-      "MIAMI MINT": "./IMAGENS/ELF BAR ICE KING/MIAMI MINT.png",
-      "TIGERS BLOOD": "./IMAGENS/ELF BAR ICE KING/TIGERS BLOOD.jpg",
-      "GRAPE ICE": "./IMAGENS/ELF BAR ICE KING/UVA ICE.png",
-      "WATERMELON": "./IMAGENS/ELF BAR ICE KING/WATERMELON ICE.png"
+      "TIGER BLOOD": "./IMAGENS/ELF BAR ICE KING/TIGERS BLOOD.jpg"
     },
     "description": "O Elf Bar Ice King combina um visual moderno com quatro sabores gelados e frutados para uma escolha pratica e marcante.",
     "specifications": [
@@ -441,6 +429,39 @@ const products = {
       "Pedido simples e direto pelo catalogo."
     ]
   },
+  "nik-bar-12k-grape-ice": {
+    "id": "nik-bar-12k-grape-ice",
+    "model": "NIK BAR 12K",
+    "brand": "NIK BAR",
+    "price": 80,
+    "flavors": {
+      "GRAPE ICE": 2
+    },
+    "category": "Pod descartavel",
+    "cover": "./IMAGENS/NIK BAR 12K/1.png",
+    "gallery": [
+      "./IMAGENS/NIK BAR 12K/1.png",
+      "./IMAGENS/NIK BAR 12K/2.png",
+      "./IMAGENS/NIK BAR 12K/GRAPE ICE.png"
+    ],
+    "flavorImages": {
+      "GRAPE ICE": "./IMAGENS/NIK BAR 12K/GRAPE ICE.png"
+    },
+    "description": "O NIK BAR 12K oferece ate 12.000 puffs com sabor Grape Ice, combinando uva marcante e toque gelado em um formato pratico.",
+    "specifications": [
+      "Ate 12.000 puffs",
+      "Sabor Grape Ice",
+      "Formato pratico para o dia a dia",
+      "2 unidades disponiveis"
+    ],
+    "whyChoose": [
+      "Sabor de uva com toque gelado.",
+      "Autonomia de ate 12.000 puffs.",
+      "Formato compacto e facil de transportar.",
+      "Imagem correspondente ao sabor selecionado.",
+      "Pedido simples e direto pelo catalogo."
+    ]
+  },
   "we-fume-30k": {
     "id": "we-fume-30k",
     "model": "WE FUME 30K",
@@ -449,10 +470,10 @@ const products = {
     "originalPrice": 129.9,
     "isPromotion": true,
     "flavors": {
-      "STAWBERRY WATERMELON": 1,
-      "MIAMI MIX": 1,
-      "STAWBERRY BANANA": 1,
-      "FROZEN TRIPPLE APPLE": 1
+      "STAWBERRY WATERMELON": 0,
+      "MIAMI MIX": 0,
+      "STAWBERRY BANANA": 0,
+      "FROZEN TRIPPLE APPLE": 0
     },
     "category": "Pod descartavel",
     "cover": "./IMAGENS/WE FUME/1.png",
