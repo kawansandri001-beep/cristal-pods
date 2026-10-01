@@ -45,7 +45,7 @@ const useLocationButton = document.getElementById("use-location-button");
 const locationStatus = document.getElementById("location-status");
 const INVENTORY_STORAGE_KEY = "cristal-pods-inventory";
 const INVENTORY_STATE_VERSION_KEY = "cristal-pods-inventory-version";
-const INVENTORY_STATE_VERSION = "stock-reset-2026-09-10";
+const INVENTORY_STATE_VERSION = "stock-reset-2026-10-01";
 const whatsappBase = "https://wa.me/557588442493?text=";
 const DELIVERY_FEE = 10;
 const DELIVERY_METHOD = "Entrega";
@@ -325,34 +325,28 @@ const products = {
     "brand": "IGNITE",
     "price": 130,
     "flavors": {
-      "COCONUT BANANA": 1,
-      "GRAPE ICE": 1,
-      "GREEN APPLE": 1
+      "COCONUT BANANA": 1
     },
     "category": "Pod descartavel",
     "cover": "./IMAGENS/IGNITE V300/1.png",
     "gallery": [
       "./IMAGENS/IGNITE V300/1.png",
-      "./IMAGENS/IGNITE V300/COCONOUT BANANA.png",
-      "./IMAGENS/IGNITE V300/GRAPE ICE.png",
-      "./IMAGENS/IGNITE V300/GREEN APPLE.png"
+      "./IMAGENS/IGNITE V300/COCONOUT BANANA.png"
     ],
     "flavorImages": {
-      "COCONUT BANANA": "./IMAGENS/IGNITE V300/COCONOUT BANANA.png",
-      "GRAPE ICE": "./IMAGENS/IGNITE V300/GRAPE ICE.png",
-      "GREEN APPLE": "./IMAGENS/IGNITE V300/GREEN APPLE.png"
+      "COCONUT BANANA": "./IMAGENS/IGNITE V300/COCONOUT BANANA.png"
     },
     "description": "O Ignite V300 traz um formato Ultra Slim com tecnologia Dual Mesh, visual leve e sabores marcantes para uma experiencia direta e pratica.",
     "specifications": [
       "Formato Ultra Slim, leve e confortavel",
       "Tecnologia Dual Mesh",
       "Indicadores visuais de bateria e liquido",
-      "Quatro sabores disponiveis"
+      "Sabor Coconut Banana disponivel"
     ],
     "whyChoose": [
       "Design compacto para levar com facilidade.",
       "Tecnologia Dual Mesh para uma experiencia consistente.",
-      "Quatro perfis de sabor para escolher.",
+      "Sabor Coconut Banana com perfil tropical.",
       "Leitura visual pratica de bateria e liquido.",
       "Uso simples, sem configuracoes complexas."
     ]
@@ -363,7 +357,7 @@ const products = {
     "brand": "ELF BAR",
     "price": 140,
     "flavors": {
-      "TIGER BLOOD": 1
+      "TIGER BLOOD": 0
     },
     "category": "Pod descartavel",
     "cover": "./IMAGENS/ELF BAR ICE KING/1.png",
@@ -394,11 +388,12 @@ const products = {
     "id": "elf-bar-30k",
     "model": "ELF BAR 30K",
     "brand": "ELF BAR",
-    "price": 119.9,
+    "price": 100,
+    "originalPrice": 119.9,
+    "isPromotion": true,
     "flavors": {
       "GREEN APPLE ICE": 1,
-      "BUBBALOO TUTTI FRUTTI": 1,
-      "WATERMELON ICE": 1
+      "BUBBALOO TUTTI FRUTTI": 1
     },
     "category": "Pod descartavel",
     "cover": "./IMAGENS/elf bar 30k/1.png",
@@ -406,24 +401,22 @@ const products = {
       "./IMAGENS/elf bar 30k/1.png",
       "./IMAGENS/elf bar 30k/2.png",
       "./IMAGENS/elf bar 30k/GREEN APPLE ICE.png",
-      "./IMAGENS/elf bar 30k/BUBBALOO TUTTI FRUTTI.png",
-      "./IMAGENS/elf bar 30k/WATERMELON ICE.png"
+      "./IMAGENS/elf bar 30k/BUBBALOO TUTTI FRUTTI.png"
     ],
     "flavorImages": {
       "GREEN APPLE ICE": "./IMAGENS/elf bar 30k/GREEN APPLE ICE.png",
-      "BUBBALOO TUTTI FRUTTI": "./IMAGENS/elf bar 30k/BUBBALOO TUTTI FRUTTI.png",
-      "WATERMELON ICE": "./IMAGENS/elf bar 30k/WATERMELON ICE.png"
+      "BUBBALOO TUTTI FRUTTI": "./IMAGENS/elf bar 30k/BUBBALOO TUTTI FRUTTI.png"
     },
     "description": "O Elf Bar 30K entrega ate 30.000 puffs em um formato pratico, com sabores frutados e gelados para quem busca uma experiencia marcante.",
     "specifications": [
       "Ate 30.000 puffs",
-      "Tres sabores disponiveis",
+      "Dois sabores disponiveis",
       "Formato pratico para o dia a dia",
       "Design moderno"
     ],
     "whyChoose": [
       "Alta autonomia com ate 30.000 puffs.",
-      "Tres perfis de sabor para escolher.",
+      "Dois perfis de sabor para escolher.",
       "Opcoes frutadas e refrescantes.",
       "Imagem especifica para cada sabor selecionado.",
       "Pedido simples e direto pelo catalogo."
@@ -435,7 +428,7 @@ const products = {
     "brand": "NIK BAR",
     "price": 80,
     "flavors": {
-      "GRAPE ICE": 2
+      "GRAPE ICE": 0
     },
     "category": "Pod descartavel",
     "cover": "./IMAGENS/NIK BAR 12K/1.png",
