@@ -45,7 +45,7 @@ const useLocationButton = document.getElementById("use-location-button");
 const locationStatus = document.getElementById("location-status");
 const INVENTORY_STORAGE_KEY = "cristal-pods-inventory";
 const INVENTORY_STATE_VERSION_KEY = "cristal-pods-inventory-version";
-const INVENTORY_STATE_VERSION = "stock-reset-2026-10-01";
+const INVENTORY_STATE_VERSION = "stock-reset-2026-10-13";
 const whatsappBase = "https://wa.me/557588442493?text=";
 const DELIVERY_FEE = 10;
 const DELIVERY_METHOD = "Entrega";
@@ -325,7 +325,7 @@ const products = {
     "brand": "IGNITE",
     "price": 130,
     "flavors": {
-      "COCONUT BANANA": 1
+      "COCONUT BANANA": 0
     },
     "category": "Pod descartavel",
     "cover": "./IMAGENS/IGNITE V300/1.png",
@@ -392,8 +392,8 @@ const products = {
     "originalPrice": 119.9,
     "isPromotion": true,
     "flavors": {
-      "GREEN APPLE ICE": 1,
-      "BUBBALOO TUTTI FRUTTI": 1
+      "GREEN APPLE ICE": 0,
+      "BUBBALOO TUTTI FRUTTI": 0
     },
     "category": "Pod descartavel",
     "cover": "./IMAGENS/elf bar 30k/1.png",
@@ -685,9 +685,9 @@ const products = {
     "id": "ignite-v155",
     "model": "IGNITE V155",
     "brand": "IGNITE",
-    "price": 120,
+    "price": 100,
     "flavors": {
-      "Menta Ice": 0
+      "ICE MINT": 1
     },
     "category": "Pods descartaveis",
     "cover": "./IMAGENS/V155.webp",
@@ -702,10 +702,10 @@ const products = {
     "id": "v80-ignite",
     "model": "V80 IGNITE",
     "brand": "IGNITE",
-    "price": 110,
+    "price": 90,
     "flavors": {
       "Morango Gelado": 0,
-      "Menta Ice": 0
+      "ICE MINT": 1
     },
     "category": "Pods descartaveis",
     "cover": "./IMAGENS/v80.webp",
