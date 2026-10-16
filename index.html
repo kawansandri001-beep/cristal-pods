@@ -16,7 +16,19 @@
   >
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="age-gate-open">
+  <section class="age-gate" id="age-gate" role="alertdialog" aria-modal="true" aria-labelledby="age-gate-title" aria-describedby="age-gate-description">
+    <div class="age-gate-card">
+      <span class="age-gate-kicker">Termo de ciencia 18+</span>
+      <h1 id="age-gate-title">Conteudo exclusivo para maiores de idade</h1>
+      <p id="age-gate-description">Este site contem produtos proibidos para menores de 18 anos. Ao continuar, voce declara que tem 18 anos ou mais e esta ciente do conteudo apresentado.</p>
+      <div class="age-gate-actions">
+        <button class="age-gate-confirm" id="age-gate-confirm" type="button">Estou ciente e tenho 18+</button>
+        <button class="age-gate-decline" id="age-gate-decline" type="button">Nao tenho 18+</button>
+      </div>
+    </div>
+  </section>
+
   <div class="top-alert" role="note">
     <strong>Venda proibida para menores de 18 anos</strong>
     <span>Ao pedir no site, os dados do pedido sao organizados e enviados para o WhatsApp.</span>

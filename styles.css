@@ -30,6 +30,10 @@ body.cart-open {
   overflow: hidden;
 }
 
+body.age-gate-open {
+  overflow: hidden;
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -58,6 +62,105 @@ input {
   background: #fff0f3;
   border-bottom: 1px solid #f3c7d3;
   text-align: center;
+}
+
+.age-gate[hidden] {
+  display: none !important;
+}
+
+.age-gate {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(12, 23, 42, 0.76);
+  backdrop-filter: blur(8px);
+}
+
+.age-gate-card {
+  width: min(100%, 520px);
+  padding: clamp(28px, 6vw, 44px);
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: 28px;
+  background: var(--surface);
+  box-shadow: 0 28px 70px rgba(7, 21, 43, 0.32);
+  text-align: center;
+  animation: modal-in 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.age-gate-kicker {
+  display: inline-flex;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #fff0f3;
+  color: var(--danger);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.age-gate h1 {
+  margin: 18px 0 14px;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.65rem, 5vw, 2.2rem);
+  line-height: 1.14;
+}
+
+.age-gate p {
+  max-width: 430px;
+  margin: 0 auto;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.age-gate-actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.age-gate-confirm,
+.age-gate-decline {
+  min-height: 52px;
+  padding: 0 20px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 800;
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.age-gate-confirm {
+  border: 0;
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 12px 24px rgba(21, 101, 192, 0.22);
+}
+
+.age-gate-decline {
+  border: 1px solid #efc5cf;
+  background: #fff6f8;
+  color: #a62540;
+}
+
+.age-gate-confirm:hover,
+.age-gate-decline:hover {
+  transform: translateY(-1px);
+}
+
+.age-gate-confirm:focus-visible,
+.age-gate-decline:focus-visible {
+  outline: 3px solid rgba(21, 101, 192, 0.35);
+  outline-offset: 3px;
+}
+
+.age-gate-confirm:disabled,
+.age-gate-decline:disabled {
+  cursor: wait;
+  opacity: 0.68;
 }
 
 .top-alert strong {

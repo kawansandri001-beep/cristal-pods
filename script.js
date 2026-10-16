@@ -2,6 +2,9 @@ const productsGrid = document.getElementById("products-grid");
 const catalogSearchInput = document.getElementById("catalog-search-input");
 const catalogFilterPromotion = document.getElementById("catalog-filter-promotion");
 const catalogResults = document.getElementById("catalog-results");
+const ageGate = document.getElementById("age-gate");
+const ageGateConfirm = document.getElementById("age-gate-confirm");
+const ageGateDecline = document.getElementById("age-gate-decline");
 const productModal = document.getElementById("product-modal");
 const productModalBackdrop = document.getElementById("product-modal-backdrop");
 const productModalClose = document.getElementById("product-modal-close");
@@ -45,7 +48,7 @@ const useLocationButton = document.getElementById("use-location-button");
 const locationStatus = document.getElementById("location-status");
 const INVENTORY_STORAGE_KEY = "cristal-pods-inventory";
 const INVENTORY_STATE_VERSION_KEY = "cristal-pods-inventory-version";
-const INVENTORY_STATE_VERSION = "stock-reset-2026-10-13";
+const INVENTORY_STATE_VERSION = "stock-reset-2026-10-15-v155-v300-vnano-life-pod";
 const whatsappBase = "https://wa.me/557588442493?text=";
 const DELIVERY_FEE = 10;
 const DELIVERY_METHOD = "Entrega";
@@ -55,6 +58,56 @@ let selectedPayment = "";
 let activeProductId = "";
 let activeGalleryIndex = 0;
 let selectedProductFlavor = "";
+
+function confirmAgeAccess() {
+  if (!ageGate) {
+    return;
+  }
+
+  ageGate.hidden = true;
+  document.body.classList.remove("age-gate-open");
+}
+
+function denyAgeAccess() {
+  if (ageGateDecline) {
+    ageGateDecline.disabled = true;
+    ageGateDecline.textContent = "Saindo...";
+  }
+
+  window.close();
+
+  // Browsers only close tabs opened by scripts; use a blank page as the fallback.
+  window.setTimeout(() => {
+    if (!window.closed) {
+      window.location.replace("about:blank");
+    }
+  }, 120);
+}
+
+function trapAgeGateFocus(event) {
+  if (!ageGate || ageGate.hidden) {
+    return;
+  }
+
+  if (event.key === "Escape") {
+    event.preventDefault();
+    event.stopPropagation();
+    return;
+  }
+
+  if (event.key !== "Tab") {
+    return;
+  }
+
+  const focusableButtons = [ageGateConfirm, ageGateDecline].filter(Boolean);
+  const activeIndex = focusableButtons.indexOf(document.activeElement);
+  const nextIndex = event.shiftKey
+    ? (activeIndex <= 0 ? focusableButtons.length - 1 : activeIndex - 1)
+    : (activeIndex + 1) % focusableButtons.length;
+
+  event.preventDefault();
+  focusableButtons[nextIndex].focus();
+}
 
 const products = {
   "ice-king-uva": {
@@ -281,28 +334,31 @@ const products = {
     "id": "ignite-v155-ultra-slim",
     "model": "IGNITE V155 ULTRA SLIM",
     "brand": "IGNITE",
-    "price": 95,
+    "price": 100,
     "flavors": {
-      "GRAPE ICE": 0,
-      "STRAWBERRY KIWI": 0,
-      "WATERMELON ICE": 0,
-      "KIWI FRUIT GUAVA": 0
+      "MELANCIA": 1,
+      "MORANGO": 1,
+      "KIWI COM GOIABA": 1,
+      "GRAPE ICE": 1,
+      "MENTA ICY": 1
     },
     "category": "Pod descartavel",
     "cover": "./IMAGENS/v155 ultra slim/1.png",
     "gallery": [
       "./IMAGENS/v155 ultra slim/1.png",
       "./IMAGENS/v155 ultra slim/2.png",
+      "./IMAGENS/v155 ultra slim/MELANCIA.png",
+      "./IMAGENS/v155 ultra slim/MORANGO ICE.png",
       "./IMAGENS/v155 ultra slim/GRAPE ICE.png",
-      "./IMAGENS/v155 ultra slim/STABERRY KIWI.png",
-      "./IMAGENS/v155 ultra slim/WATERMELON ICE.webp",
-      "./IMAGENS/v155 ultra slim/KIWI FRUIT GUAVA.png"
+      "./IMAGENS/v155 ultra slim/ICY MINT.png",
+      "./IMAGENS/v155 ultra slim/KIWI PASSION FRUIT GUAVA.png"
     ],
     "flavorImages": {
       "GRAPE ICE": "./IMAGENS/v155 ultra slim/GRAPE ICE.png",
-      "STRAWBERRY KIWI": "./IMAGENS/v155 ultra slim/STABERRY KIWI.png",
-      "WATERMELON ICE": "./IMAGENS/v155 ultra slim/WATERMELON ICE.webp",
-      "KIWI FRUIT GUAVA": "./IMAGENS/v155 ultra slim/KIWI FRUIT GUAVA.png"
+      "MORANGO": "./IMAGENS/v155 ultra slim/MORANGO ICE.png",
+      "MELANCIA": "./IMAGENS/v155 ultra slim/MELANCIA.png",
+      "KIWI COM GOIABA": "./IMAGENS/v155 ultra slim/KIWI PASSION FRUIT GUAVA.png",
+      "MENTA ICY": "./IMAGENS/v155 ultra slim/ICY MINT.png"
     },
     "description": "O Ignite V155 Ultra Slim combina formato fino, autonomia de ate 15.500 puffs e sabores frutados com toque gelado para uma experiencia pratica no dia a dia.",
     "specifications": [
@@ -314,39 +370,48 @@ const products = {
     "whyChoose": [
       "Formato Ultra Slim, fino e confortavel para transportar.",
       "Autonomia para acompanhar a rotina com ate 15.500 puffs.",
-      "Quatro sabores disponiveis para escolher no mesmo modelo.",
+      "Cinco sabores disponiveis para escolher no mesmo modelo.",
       "Recarga pratica por Tipo-C.",
       "Modos Boost e Eco para ajustar a experiencia."
     ]
   },
   "ignite-v300": {
     "id": "ignite-v300",
-    "model": "IGNITE V300",
+    "model": "IGNITE V300 ULTRA SLIM",
     "brand": "IGNITE",
     "price": 130,
     "flavors": {
-      "COCONUT BANANA": 0
+      "BANANA": 1,
+      "WATERMELON ICE": 1,
+      "GREEN APPLE": 1,
+      "GRAPE ICE": 1
     },
     "category": "Pod descartavel",
-    "cover": "./IMAGENS/IGNITE V300/1.png",
+    "cover": "./IMAGENS/V300 ULTRA SLIM/CAPA.png?v=20261015-224035",
     "gallery": [
-      "./IMAGENS/IGNITE V300/1.png",
-      "./IMAGENS/IGNITE V300/COCONOUT BANANA.png"
+      "./IMAGENS/V300 ULTRA SLIM/CAPA.png?v=20261015-224035",
+      "./IMAGENS/V300 ULTRA SLIM/BANANA ICE.png",
+      "./IMAGENS/V300 ULTRA SLIM/MELANCIA.png",
+      "./IMAGENS/V300 ULTRA SLIM/MAÇA VERDE.png",
+      "./IMAGENS/V300 ULTRA SLIM/GRAPE ICE.png"
     ],
     "flavorImages": {
-      "COCONUT BANANA": "./IMAGENS/IGNITE V300/COCONOUT BANANA.png"
+      "BANANA": "./IMAGENS/V300 ULTRA SLIM/BANANA ICE.png",
+      "WATERMELON ICE": "./IMAGENS/V300 ULTRA SLIM/MELANCIA.png",
+      "GREEN APPLE": "./IMAGENS/V300 ULTRA SLIM/MAÇA VERDE.png",
+      "GRAPE ICE": "./IMAGENS/V300 ULTRA SLIM/GRAPE ICE.png"
     },
-    "description": "O Ignite V300 traz um formato Ultra Slim com tecnologia Dual Mesh, visual leve e sabores marcantes para uma experiencia direta e pratica.",
+    "description": "O Ignite V300 Ultra Slim entrega ate 30.000 puffs, formato compacto, tecnologia Dual Mesh e sabores marcantes para uma experiencia pratica no dia a dia.",
     "specifications": [
       "Formato Ultra Slim, leve e confortavel",
       "Tecnologia Dual Mesh",
       "Indicadores visuais de bateria e liquido",
-      "Sabor Coconut Banana disponivel"
+      "Quatro sabores disponiveis"
     ],
     "whyChoose": [
       "Design compacto para levar com facilidade.",
       "Tecnologia Dual Mesh para uma experiencia consistente.",
-      "Sabor Coconut Banana com perfil tropical.",
+      "Quatro perfis de sabor para escolher.",
       "Leitura visual pratica de bateria e liquido.",
       "Uso simples, sem configuracoes complexas."
     ]
@@ -664,22 +729,26 @@ const products = {
     "id": "vnano",
     "model": "VNANO",
     "brand": "IGNITE",
-    "price": 60,
+    "price": 40,
     "flavors": {
-      "Maca Verde": 0,
-      "Uva Ice": 0,
-      "Frutas Tropicais": 0,
-      "Limonada de Cereja": 0,
-      "Morango Ice": 0
+      "GRAPE ICE": 1,
+      "GREEN APPLE": 1,
+      "STRAWBERRY": 1
     },
     "category": "Pods descartaveis",
-    "cover": "./IMAGENS/VNANO PRO.webp",
+    "cover": "./IMAGENS/VNANO/CAPA.png",
     "gallery": [
-      "./IMAGENS/VNANO PRO.webp",
-      "./IMAGENS/VNANO IGNITE.webp",
-      "./IMAGENS/IGNITE.webp"
+      "./IMAGENS/VNANO/CAPA.png",
+      "./IMAGENS/VNANO/GRAPE ICE.png",
+      "./IMAGENS/VNANO/MAÇA VERDE.png",
+      "./IMAGENS/VNANO/MORANGO.png"
     ],
-    "description": "Modelo compacto e facil de usar, com 1.000 puffs e sabores para o dia a dia."
+    "flavorImages": {
+      "GRAPE ICE": "./IMAGENS/VNANO/GRAPE ICE.png",
+      "GREEN APPLE": "./IMAGENS/VNANO/MAÇA VERDE.png",
+      "STRAWBERRY": "./IMAGENS/VNANO/MORANGO.png"
+    },
+    "description": "O VNANO entrega 1.000 puffs em um formato compacto, com sabores marcantes para uma experiencia pratica no dia a dia."
   },
   "ignite-v155": {
     "id": "ignite-v155",
@@ -687,7 +756,7 @@ const products = {
     "brand": "IGNITE",
     "price": 100,
     "flavors": {
-      "ICE MINT": 1
+      "ICE MINT": 0
     },
     "category": "Pods descartaveis",
     "cover": "./IMAGENS/V155.webp",
@@ -705,7 +774,7 @@ const products = {
     "price": 90,
     "flavors": {
       "Morango Gelado": 0,
-      "ICE MINT": 1
+      "ICE MINT": 0
     },
     "category": "Pods descartaveis",
     "cover": "./IMAGENS/v80.webp",
@@ -813,23 +882,22 @@ const products = {
   },
   "refil-life-pod-eco-ii-10k-puffs": {
     "id": "refil-life-pod-eco-ii-10k-puffs",
-    "model": "REFIL LIFE POD ECO II 10K PUFFS",
+    "model": "LIFE POD ECO II 10K",
     "brand": "LIFE POD",
     "price": 90,
     "flavors": {
-      "CHERRY LIME ICE": 0,
-      "BANANA ICE": 0,
-      "GRAPE HONEY": 0,
-      "CHERRY ICE": 0
+      "DRAGON FRUIT": 1
     },
     "category": "Refis",
-    "cover": "./IMAGENS/REFIL LIFE POD.webp",
+    "cover": "./IMAGENS/LIF POD/CAPA.png",
     "gallery": [
-      "./IMAGENS/REFIL LIFE POD.webp",
-      "./IMAGENS/LIFE POD.webp",
-      "./IMAGENS/REFIL LIFE POD.webp"
+      "./IMAGENS/LIF POD/CAPA.png",
+      "./IMAGENS/LIF POD/DRAGON FRUIT.png"
     ],
-    "description": "Refil Eco II com 10.000 puffs e sabores em quantidades limitadas."
+    "flavorImages": {
+      "DRAGON FRUIT": "./IMAGENS/LIF POD/DRAGON FRUIT.png"
+    },
+    "description": "O Life Pod Eco II 10K oferece ate 10.000 puffs e sabor Dragon Fruit em um formato pratico para o dia a dia."
   }
 };
 
@@ -1730,6 +1798,16 @@ if (productAddFirst) {
   productAddFirst.addEventListener("click", handleProductAdd);
 }
 
+if (ageGateConfirm) {
+  ageGateConfirm.addEventListener("click", confirmAgeAccess);
+}
+
+if (ageGateDecline) {
+  ageGateDecline.addEventListener("click", denyAgeAccess);
+}
+
+document.addEventListener("keydown", trapAgeGateFocus, true);
+
 catalogFilterPromotion?.addEventListener("change", renderProducts);
 
 if (catalogSearchInput) {
@@ -1805,3 +1883,7 @@ window.addEventListener("keydown", (event) => {
 updatePaymentSelection();
 renderProducts();
 renderCart();
+
+if (ageGate && !ageGate.hidden) {
+  window.requestAnimationFrame(() => ageGateConfirm?.focus());
+}
