@@ -48,7 +48,7 @@ const useLocationButton = document.getElementById("use-location-button");
 const locationStatus = document.getElementById("location-status");
 const INVENTORY_STORAGE_KEY = "cristal-pods-inventory";
 const INVENTORY_STATE_VERSION_KEY = "cristal-pods-inventory-version";
-const INVENTORY_STATE_VERSION = "stock-reset-2026-10-15-v155-v300-vnano-life-pod";
+const INVENTORY_STATE_VERSION = "stock-reset-2026-10-16-v300-sabores";
 const whatsappBase = "https://wa.me/557588442493?text=";
 const DELIVERY_FEE = 10;
 const DELIVERY_METHOD = "Entrega";
@@ -382,8 +382,6 @@ const products = {
     "price": 130,
     "flavors": {
       "BANANA": 1,
-      "WATERMELON ICE": 1,
-      "GREEN APPLE": 1,
       "GRAPE ICE": 1
     },
     "category": "Pod descartavel",
@@ -391,14 +389,10 @@ const products = {
     "gallery": [
       "./IMAGENS/V300 ULTRA SLIM/CAPA.png?v=20261015-224035",
       "./IMAGENS/V300 ULTRA SLIM/BANANA ICE.png",
-      "./IMAGENS/V300 ULTRA SLIM/MELANCIA.png",
-      "./IMAGENS/V300 ULTRA SLIM/MAÇA VERDE.png",
       "./IMAGENS/V300 ULTRA SLIM/GRAPE ICE.png"
     ],
     "flavorImages": {
       "BANANA": "./IMAGENS/V300 ULTRA SLIM/BANANA ICE.png",
-      "WATERMELON ICE": "./IMAGENS/V300 ULTRA SLIM/MELANCIA.png",
-      "GREEN APPLE": "./IMAGENS/V300 ULTRA SLIM/MAÇA VERDE.png",
       "GRAPE ICE": "./IMAGENS/V300 ULTRA SLIM/GRAPE ICE.png"
     },
     "description": "O Ignite V300 Ultra Slim entrega ate 30.000 puffs, formato compacto, tecnologia Dual Mesh e sabores marcantes para uma experiencia pratica no dia a dia.",
@@ -406,12 +400,12 @@ const products = {
       "Formato Ultra Slim, leve e confortavel",
       "Tecnologia Dual Mesh",
       "Indicadores visuais de bateria e liquido",
-      "Quatro sabores disponiveis"
+      "Dois sabores disponiveis"
     ],
     "whyChoose": [
       "Design compacto para levar com facilidade.",
       "Tecnologia Dual Mesh para uma experiencia consistente.",
-      "Quatro perfis de sabor para escolher.",
+      "Dois perfis de sabor para escolher.",
       "Leitura visual pratica de bateria e liquido.",
       "Uso simples, sem configuracoes complexas."
     ]
